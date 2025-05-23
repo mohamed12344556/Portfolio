@@ -33,6 +33,7 @@ class ProjectData {
       description:
           'Developed a comprehensive company formation app with detailed guides on business types and registration processes. Integrated AI-powered chatbot for real-time assistance, alongside a business card system with scanning/sharing capabilities.',
       projectUrl: 'https://github.com/mohamed12344556/sherkety',
+      thumbnailUrl: "assets/images/profile.jpg",
       images: ["assets/images/profile.jpg"],
       technologies: ['Flutter', 'Firebase', 'Bloc', 'AI Integration'],
     ),

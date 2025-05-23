@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:personal_portfolio/core/themes/app_colors.dart';
 import 'package:personal_portfolio/core/themes/app_strings.dart';
-import 'package:personal_portfolio/features/contact/presentation/widgets/hire_me_handler.dart';
 
 import '../../../../core/shared/animations/fade_animation.dart';
 import '../../../../core/shared/animations/slide_animation.dart';
 import '../../../../core/widgets/animated_button.dart';
 import '../../../../core/widgets/gradient_text.dart';
+import '../../../contact/presentation/widgets/hire_me_handler.dart';
 
 class HeroContent extends StatelessWidget {
   const HeroContent({super.key});
