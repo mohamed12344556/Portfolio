@@ -177,12 +177,12 @@ class _EducationSectionState extends State<EducationSection> {
     final List<Map<String, String>> certifications = [
       {
         'title': 'Mobile Development using Flutter, ITI (Sep 2022 - Oct 2022)',
-        'pdfUrl': 'https://example.com/certificates/flutter_iti.pdf',
+        'pdfUrl': 'assets/pdfs/UC-cfab72e7-97bd-41d9-a715-3804c988506e.pdf',
       },
       {
         'title':
             'Complete Flutter & Dart Development Course, Udemy (Aug 2023 - Oct 2023)',
-        'pdfUrl': 'https://example.com/certificates/flutter_udemy.pdf',
+        'pdfUrl': 'assets/pdfs/UC-cfab72e7-97bd-41d9-a715-3804c988506e.pdf',
       },
       {
         'title':

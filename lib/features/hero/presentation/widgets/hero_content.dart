@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_portfolio/core/themes/app_colors.dart';
 import 'package:personal_portfolio/core/themes/app_strings.dart';
+import 'package:personal_portfolio/features/education/presentation/widgets/certification_viewer.dart';
 
 import '../../../../core/shared/animations/fade_animation.dart';
 import '../../../../core/shared/animations/slide_animation.dart';
@@ -73,7 +74,13 @@ class HeroContent extends StatelessWidget {
               ),
               AnimatedButton(
                 text: AppStrings.downloadCV,
-                onPressed: () {},
+                onPressed: () {
+                  CertificateViewer.showCertificate(
+                    context,
+                    "Mohamed Ahemd AbdElqawi Flutter Dev",
+                    "assets/pdfs/Mohamed-Ahemd-AbdElqawi-Flutter-Dev.pdf",
+                  );
+                },
                 isPrimary: false,
                 icon: Icons.download,
               ),

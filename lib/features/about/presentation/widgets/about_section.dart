@@ -7,6 +7,7 @@ import 'package:personal_portfolio/core/utils/responsive.dart';
 import 'package:personal_portfolio/core/widgets/animated_button.dart';
 import 'package:personal_portfolio/core/widgets/gradient_text.dart';
 import 'package:personal_portfolio/core/widgets/section_title.dart';
+import 'package:personal_portfolio/features/education/presentation/widgets/certification_viewer.dart';
 import 'package:personal_portfolio/features/hero/presentation/widgets/stats_counter.dart'
     hide Responsive;
 
@@ -104,11 +105,10 @@ class AboutSection extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Center(
-                child: Icon(
-                  Icons.person,
-                  size: 150,
-                  color: AppColors.primaryColor,
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/images/profile2.jpg',
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -217,7 +217,13 @@ class AboutSection extends StatelessWidget {
           delay: 1.0,
           child: AnimatedButton(
             text: AppStrings.downloadCV,
-            onPressed: () {},
+            onPressed: () {
+              CertificateViewer.showCertificate(
+                context,
+                "Mohamed Ahemd AbdElqawi Flutter Dev",
+                "assets/pdfs/Mohamed-Ahemd-AbdElqawi-Flutter-Dev.pdf",
+              );
+            },
             isPrimary: true,
             icon: Icons.download,
           ),

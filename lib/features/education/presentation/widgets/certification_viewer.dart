@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:personal_portfolio/core/themes/app_colors.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
-class CertificateViewer extends StatelessWidget {
+class CertificateViewer extends StatefulWidget {
   final String title;
   final String pdfUrl;
 
@@ -12,7 +13,24 @@ class CertificateViewer extends StatelessWidget {
   });
 
   @override
+  State<CertificateViewer> createState() => _CertificateViewerState();
+
+  static void showCertificate(
+    BuildContext context,
+    String title,
+    String pdfUrl,
+  ) {
+    showDialog(
+      context: context,
+      builder: (context) => CertificateViewer(title: title, pdfUrl: pdfUrl),
+    );
+  }
+}
+
+class _CertificateViewerState extends State<CertificateViewer> {
+  @override
   Widget build(BuildContext context) {
+    bool isLoading = true;
     return Dialog(
       backgroundColor: Colors.transparent,
       insetPadding: EdgeInsets.all(20),
@@ -49,7 +67,7 @@ class CertificateViewer extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      title,
+                      widget.title,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -64,7 +82,7 @@ class CertificateViewer extends StatelessWidget {
                         icon: Icon(Icons.download, color: Colors.white),
                         onPressed: () {
                           // قم بتنزيل الشهادة
-                          _downloadCertificate(pdfUrl);
+                          _downloadCertificate(widget.pdfUrl);
                         },
                         tooltip: 'Download Certificate',
                       ),
@@ -81,22 +99,29 @@ class CertificateViewer extends StatelessWidget {
               ),
             ),
 
-            // PDF Viewer
             Expanded(
               child: Stack(
                 children: [
-                  // إضافة مكتبة عرض PDF هنا
-                  // يمكن استخدام flutter_pdfview أو syncfusion_flutter_pdfviewer
-                  // للتبسيط، سأستخدم صورة مؤقتة تعرض PDF
-                  Center(child: _buildPdfPreview()),
-
-                  // Loading Indicator
-                  Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        AppColors.primaryColor,
-                      ),
-                    ),
+                  SfPdfViewer.asset(
+                    // pdfSource,
+                    widget.pdfUrl,
+                    initialZoomLevel: 1.0,
+                    canShowScrollHead: true,
+                    canShowScrollStatus: true,
+                    canShowPaginationDialog: true,
+                    onDocumentLoaded: (details) {
+                      setState(() => isLoading = false);
+                    },
+                    onDocumentLoadFailed: (error) {
+                      setState(() => isLoading = false);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'فشل تحميل الـ PDF $widget.pdfUrl \n${error.description}',
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -132,7 +157,7 @@ class CertificateViewer extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      _openInBrowser(pdfUrl);
+                      _openInBrowser(widget.pdfUrl);
                     },
                   ),
                 ],
@@ -144,8 +169,19 @@ class CertificateViewer extends StatelessWidget {
     );
   }
 
-  Widget _buildPdfPreview() {
+  Widget _buildPdfPreview(bool isLoading) {
     // هذا مجرد نموذج، يمكنك استبداله بمكتبة PDF حقيقية
+    if (widget.pdfUrl.isNotEmpty) {
+      return SfPdfViewer.asset(
+        widget.pdfUrl,
+        initialZoomLevel: 1.0,
+        canShowScrollHead: true,
+        canShowScrollStatus: true,
+        onDocumentLoaded: (_) => setState(() => isLoading = false),
+        onDocumentLoadFailed: (_) => setState(() => isLoading = false),
+      );
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -160,7 +196,7 @@ class CertificateViewer extends StatelessWidget {
           ),
         ),
         SizedBox(height: 10),
-        Text(title, style: TextStyle(fontSize: 18)),
+        Text(widget.title, style: TextStyle(fontSize: 18)),
         SizedBox(height: 30),
         Text("Loading PDF Document...", style: TextStyle(color: Colors.grey)),
       ],
@@ -170,6 +206,9 @@ class CertificateViewer extends StatelessWidget {
   void _downloadCertificate(String url) {
     // تنفيذ تنزيل الشهادة
     // يمكن استخدام مكتبة dio أو http للتنزيل
+    // مثال بسيط:
+    // Dio dio = Dio();
+    // dio.download(url, 'certificate.pdf');
     print("Downloading certificate from: $url");
   }
 
@@ -177,18 +216,6 @@ class CertificateViewer extends StatelessWidget {
     // فتح الشهادة في المتصفح
     // استخدام url_launcher
     print("Opening certificate in browser: $url");
-  }
-
-  // دالة لعرض مربع حوار عرض الشهادة
-  static void showCertificate(
-    BuildContext context,
-    String title,
-    String pdfUrl,
-  ) {
-    showDialog(
-      context: context,
-      builder: (context) => CertificateViewer(title: title, pdfUrl: pdfUrl),
-    );
   }
 }
 

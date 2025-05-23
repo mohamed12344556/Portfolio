@@ -30,16 +30,17 @@ environment:
 dependencies:
   animations: ^2.0.11
   cupertino_icons: ^1.0.8
+  dio: ^5.8.0+1
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.2
   font_awesome_flutter: ^10.8.0
   google_fonts: ^6.2.1
   path_provider: ^2.1.5
-  pdf: ^3.11.3
   printing: ^5.14.2
   provider: ^6.1.5
   shimmer: ^3.0.0
+  syncfusion_flutter_pdfviewer: ^29.2.5
   url_launcher: ^6.3.1
 
 dev_dependencies:
