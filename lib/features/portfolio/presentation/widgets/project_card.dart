@@ -166,27 +166,14 @@ class _ProjectCardState extends State<ProjectCard>
                 end: Alignment.bottomRight,
               ),
             ),
-            child:
-                widget.thumbnailUrl != null && widget.thumbnailUrl!.isNotEmpty
-                ? Image.network(
-                    widget.thumbnailUrl!,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) =>
-                        _buildDefaultProjectImage(),
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    },
-                  )
-                : _buildDefaultProjectImage(),
+            child: widget.thumbnailUrl != null && widget.thumbnailUrl!.isNotEmpty
+              ? Image.asset(
+                widget.thumbnailUrl!,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                  _buildDefaultProjectImage(),
+                )
+              : _buildDefaultProjectImage(),
           ),
 
           // تأثير الهوفر
