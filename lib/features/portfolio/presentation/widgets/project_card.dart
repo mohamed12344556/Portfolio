@@ -520,11 +520,27 @@ class _ProjectCardState extends State<ProjectCard>
           visualDensity: VisualDensity.compact,
         ),
       );
-    } else if (widget.images.isNotEmpty) {
+    }
+    if (widget.images.isNotEmpty) {
       return TextButton.icon(
         onPressed: () => _showGallery(context),
         icon: const Icon(Icons.photo_library, size: 18),
         label: const Text('Gallery'),
+        style: TextButton.styleFrom(
+          foregroundColor: AppColors.primaryColor,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          visualDensity: VisualDensity.compact,
+        ),
+      );
+    }
+    if (widget.appStoreUrl != null || widget.playStoreUrl != null) {
+      return TextButton.icon(
+        onPressed: () => _showDownloadOptions(context),
+        icon: const Icon(Icons.download, size: 18),
+        label: const Text('Download Options'),
         style: TextButton.styleFrom(
           foregroundColor: AppColors.primaryColor,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

@@ -33,7 +33,7 @@ class ProjectData {
       description:
           'Developed a comprehensive company formation app with detailed guides on business types and registration processes. Integrated AI-powered chatbot for real-time assistance, alongside a business card system with scanning/sharing capabilities.',
       projectUrl: 'https://github.com/mohamed12344556/sherkety',
-      images: [],
+      images: ["assets/images/profile.jpg"],
       technologies: ['Flutter', 'Firebase', 'Bloc', 'AI Integration'],
     ),
     ProjectModel(
@@ -43,9 +43,10 @@ class ProjectData {
       description:
           'Developed a fully featured book store app using Flutter with secure JWT authentication, guest mode, integrated payment system and order tracking.',
       appStoreUrl: 'https://apps.apple.com/app/tkween',
+      thumbnailUrl: "assets/images/profile.jpg",
       playStoreUrl:
           'https://play.google.com/store/apps/details?id=com.mohamed.tkween',
-      images: [],
+      images: ["assets/images/profile.jpg", "assets/images/profile.jpg"],
       technologies: [
         'Flutter',
         'RESTful API',
