@@ -56,6 +56,7 @@ class AppStrings {
     'Portfolio',
     'Experience',
     'Education',
+    'Skills',
     'Contact',
   ];
 

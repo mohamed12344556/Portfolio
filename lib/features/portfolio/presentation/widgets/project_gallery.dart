@@ -157,7 +157,7 @@ class _ProjectGalleryState extends State<ProjectGallery>
                   child: InteractiveViewer(
                     minScale: 0.5,
                     maxScale: 4.0,
-                    child: Image.network(
+                    child: Image.asset(
                       imageUrl,
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) {
@@ -181,18 +181,6 @@ class _ProjectGalleryState extends State<ProjectGallery>
                               ),
                             ),
                           ],
-                        );
-                      },
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                : null,
-                            color: AppColors.primaryColor,
-                          ),
                         );
                       },
                     ),
@@ -359,7 +347,7 @@ class _ProjectGalleryState extends State<ProjectGallery>
                   child: InteractiveViewer(
                     minScale: 0.5,
                     maxScale: 5.0,
-                    child: Image.network(
+                    child: Image.asset(
                       imageUrl,
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) {
@@ -493,7 +481,7 @@ class _HorizontalProjectGalleryState extends State<HorizontalProjectGallery>
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
+                        child: Image.asset(
                           widget.images[index],
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
@@ -508,24 +496,6 @@ class _HorizontalProjectGalleryState extends State<HorizontalProjectGallery>
                                   color: widget.isDark
                                       ? AppColors.textSecondaryDark
                                       : AppColors.textSecondaryLight,
-                                ),
-                              ),
-                            );
-                          },
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Container(
-                              color: widget.isDark
-                                  ? AppColors.darkSecondary
-                                  : AppColors.lightSecondary,
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  value:
-                                      loadingProgress.expectedTotalBytes != null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
-                                      : null,
-                                  color: AppColors.primaryColor,
                                 ),
                               ),
                             );

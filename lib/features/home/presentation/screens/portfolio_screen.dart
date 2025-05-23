@@ -182,15 +182,20 @@ class _PortfolioScreenState extends State<PortfolioScreen>
 
                 // قسم المهارات
                 SkillsSection(
-                  key: GlobalKey(),
+                  key: _sectionKeys[6],
                   scrollController: _scrollController,
                 ),
 
                 // قسم الاتصال
-                ContactSection(key: _sectionKeys[6]),
+                ContactSection(key: _sectionKeys[7]),
 
                 // التذييل
-                const Footer(),
+                Footer(
+                  onNavItemTap: (p0) {
+                    _scrollToSection(p0);
+                    
+                  },
+                ),
               ],
             ),
           ),

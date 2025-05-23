@@ -77,6 +77,7 @@ class ResponsiveGridView extends StatelessWidget {
   final double childAspectRatio;
   final double crossAxisSpacing;
   final double mainAxisSpacing;
+  final ScrollController? controller;
 
   const ResponsiveGridView({
     super.key,
@@ -84,13 +85,16 @@ class ResponsiveGridView extends StatelessWidget {
     this.childAspectRatio = 1.0,
     this.crossAxisSpacing = 20,
     this.mainAxisSpacing = 20,
+    this.controller,
   });
 
   @override
+
   Widget build(BuildContext context) {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
+      controller: controller,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: _getCrossAxisCount(context),
         childAspectRatio: childAspectRatio,

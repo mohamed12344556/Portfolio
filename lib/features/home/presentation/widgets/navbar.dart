@@ -25,10 +25,6 @@ class Navbar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
-        // backgroundBlendMode: const ColorFilter.mode(
-        //   Colors.transparent,
-        //   BlendMode.multiply,
-        // ),
         border: Border(
           bottom: BorderSide(
             color: isDarkMode ? AppColors.darkBorder : AppColors.lightBorder,
@@ -40,15 +36,77 @@ class Navbar extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         toolbarHeight: 80,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: Center(
-            child: Text(
-              'MA',
-              style: TextStyle(
-                color: AppColors.primaryColor,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
+        scrolledUnderElevation: 0,
+        leading: GestureDetector(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Choice'),
+                content: const Text(
+                  'Do you want to go back to the top of the page or view the image?',
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      onNavItemTap(0);
+                      // Scroll to the top of the page
+                      Scrollable.ensureVisible(
+                        context,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    child: const Text('Back to the top of the page'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      // Show the image in a dialog
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          backgroundColor:
+                              Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.darkCard
+                              : AppColors.lightCard,
+                          title: Text(
+                            '👀❤️‍🩹 قولي رأيك بصراحة ',
+                            style: TextStyle(
+                              color: AppColors.primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('Close'),
+                            ),
+                          ],
+                          content: Image.asset(
+                            'assets/images/m7m71.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Text('View the image'),
+                  ),
+                ],
+              ),
+            );
+          },
+          child: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            child: ClipOval(
+              child: Image.asset(
+                'assets/images/m7m71.png',
+                height: 55,
+                width: 55,
+                fit: BoxFit.cover,
+                scale: 1.5,
               ),
             ),
           ),

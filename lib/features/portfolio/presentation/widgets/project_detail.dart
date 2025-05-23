@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_portfolio/core/shared/animations/fade_animation.dart';
-import 'package:personal_portfolio/features/home/data/models/project_model.dart';
+import 'package:personal_portfolio/core/shared/data/models/project_model.dart';
 import 'package:personal_portfolio/core/themes/app_colors.dart';
 import 'package:personal_portfolio/core/utils/url_launcher.dart';
 import 'package:personal_portfolio/features/portfolio/presentation/widgets/project_gallery.dart';

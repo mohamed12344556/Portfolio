@@ -115,22 +115,24 @@ class _ProjectCardState extends State<ProjectCard>
                       Flexible(
                         child: Padding(
                           padding: const EdgeInsets.all(20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize:
-                                MainAxisSize.min, // هام: تقليل الارتفاع الكلي
-                            children: [
-                              _buildTitle(),
-                              const SizedBox(height: 5),
-                              _buildCategoryAndDate(),
-                              const SizedBox(height: 10),
-                              _buildDescription(),
-                              const SizedBox(height: 10),
-                              // استخدم عدد محدود من التقنيات لتجنب تجاوز المحتوى
-                              _buildTechnologies(),
-                              const SizedBox(height: 10),
-                              _buildButtons(),
-                            ],
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize:
+                                  MainAxisSize.min, // هام: تقليل الارتفاع الكلي
+                              children: [
+                                _buildTitle(),
+                                const SizedBox(height: 5),
+                                _buildCategoryAndDate(),
+                                const SizedBox(height: 10),
+                                _buildDescription(),
+                                const SizedBox(height: 10),
+                                // استخدم عدد محدود من التقنيات لتجنب تجاوز المحتوى
+                                _buildTechnologies(),
+                                const SizedBox(height: 10),
+                                _buildButtons(),
+                              ],
+                            ),
                           ),
                         ),
                       ),
