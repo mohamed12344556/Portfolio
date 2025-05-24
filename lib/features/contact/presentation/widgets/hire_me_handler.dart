@@ -240,24 +240,51 @@ Service: ${serviceController.text}
 Message: ${messageController.text}
                 ''';
 
-                // إرسال عبر WhatsApp
-                sendWhatsAppMessage('+201060796400', message, context: context);
-
-                // إرسال عبر البريد الإلكتروني
-                sendEmail(
-                  'mohamedahbd545@gmail.com',
-                  'Portfolio Inquiry from ${nameController.text}',
-                  message,
+                // عرض خيارات الإرسال
+                showDialog(
                   context: context,
-                );
-
-                Navigator.pop(context);
-
-                // عرض رسالة نجاح
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Your message has been sent!'),
-                    backgroundColor: Colors.green,
+                  builder: (context) => AlertDialog(
+                    title: Text('Choose Sending Method'),
+                    content: Text('How would you like to send your message?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          sendWhatsAppMessage(
+                            '+201060796400',
+                            message,
+                            context: context,
+                          );
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Message sent via WhatsApp!'),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                        },
+                        child: Text('WhatsApp'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          sendEmail(
+                            'mohamedahbd545@gmail.com',
+                            'Portfolio Inquiry from ${nameController.text}',
+                            message,
+                            context: context,
+                          );
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Message sent via Email!'),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                        },
+                        child: Text('Email'),
+                      ),
+                    ],
                   ),
                 );
               }

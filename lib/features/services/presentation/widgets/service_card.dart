@@ -49,16 +49,18 @@ class ServiceCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [AppTheme.primaryColor, AppTheme.accentColor],
+                  Flexible(
+                    child: Container(
+                      width: 70,
+                      height: 70,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [AppTheme.primaryColor, AppTheme.accentColor],
+                        ),
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                      borderRadius: BorderRadius.circular(15),
+                      child: Icon(icon, color: Colors.white, size: 35),
                     ),
-                    child: Icon(icon, color: Colors.white, size: 35),
                   ),
                   const SizedBox(height: 20),
                   Text(

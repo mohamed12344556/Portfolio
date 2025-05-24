@@ -7,10 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:personal_portfolio/core/themes/app_colors.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:personal_portfolio/core/themes/app_colors.dart';
 
 class CertificateViewer extends StatefulWidget {
   final String title;
@@ -252,29 +251,6 @@ class _CertificateViewerState extends State<CertificateViewer> {
     }
   }
 }
-
-// Future<void> _openInBrowser(String url, BuildContext context) async {
-//   try {
-//     final uri = Uri.parse(url);
-
-//     // Attempt to launch the URL
-//     if (!await canLaunchUrl(uri)) {
-//       debugPrint('Could not launch $url');
-//       ScaffoldMessenger.of(
-//         context,
-//       ).showSnackBar(SnackBar(content: Text('Failed to open the link: $url')));
-//       return;
-//     }
-
-//     // Open the URL in a new tab or external browser
-//     await launchUrl(uri, mode: LaunchMode.externalApplication);
-//   } catch (e) {
-//     debugPrint('Error occurred while opening the URL: $e');
-//     ScaffoldMessenger.of(
-//       context,
-//     ).showSnackBar(SnackBar(content: Text('An error occurred: $e')));
-//   }
-// }
 
 Future<void> _openInBrowser(String assetPath, BuildContext context) async {
   if (kIsWeb) {
