@@ -28,31 +28,33 @@ class HeroImage extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Container(
-              width: 380,
-              height: 380,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: isDark ? AppColors.darkCard : AppColors.lightCard,
-                image: DecorationImage(
-                  image: const AssetImage('assets/images/profile.jpg'),
-                  fit: BoxFit.cover,
-                  onError: (error, stackTrace) {
-                    // Show alert dialog if image fails to load
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text('Error'),
-                        content: const Text('Failed to load image.'),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+            Expanded(
+              child: Container(
+                width: 380,
+                height: 380,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isDark ? AppColors.darkCard : AppColors.lightCard,
+                  image: DecorationImage(
+                    image: const AssetImage('images/profile.jpg'),
+                    fit: BoxFit.cover,
+                    onError: (error, stackTrace) {
+                      // Show alert dialog if image fails to load
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Error'),
+                          content: const Text('Failed to load image.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
