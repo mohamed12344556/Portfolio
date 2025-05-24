@@ -34,9 +34,25 @@ class HeroImage extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isDark ? AppColors.darkCard : AppColors.lightCard,
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/profile.jpg'),
+                image: DecorationImage(
+                  image: const AssetImage('assets/images/profile.jpg'),
                   fit: BoxFit.cover,
+                  onError: (error, stackTrace) {
+                    // Show alert dialog if image fails to load
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Error'),
+                        content: const Text('Failed to load image.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
