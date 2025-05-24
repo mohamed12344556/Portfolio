@@ -1,6 +1,16 @@
+import 'dart:html' as html;
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
+import 'package:flutter/services.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'package:personal_portfolio/core/themes/app_colors.dart';
 
 class CertificateViewer extends StatefulWidget {
   final String title;
@@ -157,7 +167,7 @@ class _CertificateViewerState extends State<CertificateViewer> {
                       ),
                     ),
                     onPressed: () {
-                      _openInBrowser(widget.pdfUrl);
+                      _openInBrowser(widget.pdfUrl, context);
                     },
                   ),
                 ],
@@ -203,19 +213,100 @@ class _CertificateViewerState extends State<CertificateViewer> {
     );
   }
 
-  void _downloadCertificate(String url) {
-    // تنفيذ تنزيل الشهادة
-    // يمكن استخدام مكتبة dio أو http للتنزيل
-    // مثال بسيط:
-    // Dio dio = Dio();
-    // dio.download(url, 'certificate.pdf');
-    print("Downloading certificate from: $url");
+  // void _downloadCertificate(String url) {
+  //   // تنفيذ تنزيل الشهادة
+  //   // يمكن استخدام مكتبة dio أو http للتنزيل
+  //   // مثال بسيط:
+  //   // Dio dio = Dio();
+  //   // dio.download(url, 'certificate.pdf');
+  //   print("Downloading certificate from: $url");
+  // }
+  void _downloadCertificate(String url) async {
+    if (kIsWeb) {
+      // على الويب: أنشئ عنصر <a download>
+      final anchor = html.AnchorElement(href: url)
+        ..setAttribute('download', '') // اسم افتراضي؛ تستطيع تغييره
+        ..click();
+    } else {
+      // على الموبايل/دسكتوب: استخدم Dio لتحميل الملف إلى مساحة التخزين
+      final dio = Dio();
+      final dir = '/storage/emulated/0/Download'; // مثال لمجلد على أندرويد
+      final savePath = '$dir/certificate.pdf';
+
+      try {
+        await dio.download(
+          url,
+          savePath,
+          onReceiveProgress: (received, total) {
+            // تستطيع هنا تحديث ProgressIndicator
+          },
+        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('تم تنزيل الملف في: $savePath')));
+      } catch (e) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('فشل التنزيل: $e')));
+      }
+    }
+  }
+}
+
+// Future<void> _openInBrowser(String url, BuildContext context) async {
+//   try {
+//     final uri = Uri.parse(url);
+
+//     // Attempt to launch the URL
+//     if (!await canLaunchUrl(uri)) {
+//       debugPrint('Could not launch $url');
+//       ScaffoldMessenger.of(
+//         context,
+//       ).showSnackBar(SnackBar(content: Text('Failed to open the link: $url')));
+//       return;
+//     }
+
+//     // Open the URL in a new tab or external browser
+//     await launchUrl(uri, mode: LaunchMode.externalApplication);
+//   } catch (e) {
+//     debugPrint('Error occurred while opening the URL: $e');
+//     ScaffoldMessenger.of(
+//       context,
+//     ).showSnackBar(SnackBar(content: Text('An error occurred: $e')));
+//   }
+// }
+
+Future<void> _openInBrowser(String assetPath, BuildContext context) async {
+  if (kIsWeb) {
+    // على الويب: وجه المسار النسبي للأصول إلى URL كامل
+    final origin = Uri.base.origin;
+    final url = '$origin/$assetPath';
+    html.window.open(url, '_blank');
+    return;
   }
 
-  void _openInBrowser(String url) {
-    // فتح الشهادة في المتصفح
-    // استخدام url_launcher
-    print("Opening certificate in browser: $url");
+  try {
+    // على الموبايل/دسكتوب: انسخ الـ asset لملف مؤقت ثم افتحه
+    final data = await rootBundle.load(assetPath);
+    final bytes = data.buffer.asUint8List();
+    final tempDir = await getTemporaryDirectory();
+    final file = File(p.join(tempDir.path, p.basename(assetPath)));
+    await file.writeAsBytes(bytes, flush: true);
+
+    final uri = file.uri;
+    if (!await canLaunchUrl(uri)) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('لا يمكن فتح الملف')));
+      return;
+    }
+
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+  } catch (e) {
+    debugPrint('Error opening asset: $e');
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('حدث خطأ: $e')));
   }
 }
 

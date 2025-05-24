@@ -78,6 +78,8 @@ class ResponsiveGridView extends StatelessWidget {
   final double crossAxisSpacing;
   final double mainAxisSpacing;
   final ScrollController? controller;
+  final bool shrinkWrap;
+  final ScrollPhysics physics;
 
   const ResponsiveGridView({
     super.key,
@@ -86,14 +88,15 @@ class ResponsiveGridView extends StatelessWidget {
     this.crossAxisSpacing = 20,
     this.mainAxisSpacing = 20,
     this.controller,
+    this.shrinkWrap = true,
+    this.physics = const NeverScrollableScrollPhysics(),
   });
 
   @override
-
   Widget build(BuildContext context) {
     return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: shrinkWrap,
+      physics: physics,
       controller: controller,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: _getCrossAxisCount(context),

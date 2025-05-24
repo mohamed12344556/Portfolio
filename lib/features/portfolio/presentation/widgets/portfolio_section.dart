@@ -73,52 +73,49 @@ class _PortfolioSectionState extends State<PortfolioSection> {
         color: isDark ? AppColors.darkBackground : AppColors.lightBackground,
       ),
       child: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: ResponsivePadding.getContentWidth(context),
-          ),
-          child: Column(
-            children: [
-              const SectionTitle(
-                title: AppStrings.portfolioTitle,
-                subtitle: AppStrings.portfolioSubtitle,
-              ),
-              const SizedBox(height: 20),
-              FadeAnimation(
-                delay: 0.2,
-                child: AnimatedText(
-                  text:
-                      "Check out some of my recent work and personal projects",
-                  style: TextStyle(
-                    color: isDark
-                        ? AppColors.textSecondaryDark
-                        : AppColors.textSecondaryLight,
-                    fontSize: 18,
-                  ),
-                  textAlign: TextAlign.center,
+        child: Column(
+          children: [
+            const SectionTitle(
+              title: AppStrings.portfolioTitle,
+              subtitle: AppStrings.portfolioSubtitle,
+            ),
+            const SizedBox(height: 20),
+            FadeAnimation(
+              delay: 0.2,
+              child: AnimatedText(
+                text: "Check out some of my recent work and personal projects",
+                style: TextStyle(
+                  color: isDark
+                      ? AppColors.textSecondaryDark
+                      : AppColors.textSecondaryLight,
+                  fontSize: 18,
                 ),
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 40),
-              FadeAnimation(
-                delay: 0.3,
-                child: FilterChips(
-                  categories: ProjectData.getCategories(),
-                  selectedCategory: _selectedCategory,
-                  onCategorySelected: (category) {
-                    setState(() {
-                      _selectedCategory = category;
-                      _currentMobileIndex = 0;
-                      _mobilePageController.jumpToPage(0);
-                    });
-                  },
-                ),
+            ),
+            const SizedBox(height: 40),
+            FadeAnimation(
+              delay: 0.3,
+              child: FilterChips(
+                categories: ProjectData.getCategories(),
+                selectedCategory: _selectedCategory,
+                onCategorySelected: (category) {
+                  setState(() {
+                    _selectedCategory = category;
+                    _currentMobileIndex = 0;
+                  });
+                  if (Responsive.isMobile(context) &&
+                      _mobilePageController.hasClients) {
+                    _mobilePageController.jumpToPage(0);
+                  }
+                },
               ),
-              const SizedBox(height: 40),
-              _selectedProject == null
-                  ? _buildProjectGrid(context, isDark)
-                  : _buildProjectDetail(context, isDark),
-            ],
-          ),
+            ),
+            const SizedBox(height: 40),
+            _selectedProject == null
+                ? _buildProjectGrid(context, isDark)
+                : _buildProjectDetail(context, isDark),
+          ],
         ),
       ),
     );
@@ -134,29 +131,37 @@ class _PortfolioSectionState extends State<PortfolioSection> {
     if (Responsive.isMobile(context)) {
       return _buildMobileProjectView(context, isDark, filteredProjects);
     } else {
-      return ResponsiveGridView(
-        childAspectRatio: Responsive.isTablet(context) ? 0.7 : 0.75,
-        children: filteredProjects.asMap().entries.map((entry) {
-          final index = entry.key;
-          final project = entry.value;
-
-          return ProjectCard(
-            title: project.title,
-            category: project.category,
-            date: project.date,
-            description: project.description,
-            images: project.images,
-            thumbnailUrl: project.thumbnailUrl,
-            projectUrl: project.projectUrl,
-            appStoreUrl: project.appStoreUrl,
-            playStoreUrl: project.playStoreUrl,
-            technologies: project.technologies,
-            isDark: isDark,
-            delay: index * 0.1,
-          );
-        }).toList(),
-      );
+      return _buildDesktopProjectGrid(context, isDark, filteredProjects);
     }
+  }
+
+  Widget _buildDesktopProjectGrid(
+    BuildContext context,
+    bool isDark,
+    List<ProjectModel> filteredProjects,
+  ) {
+    return ResponsiveGridView(
+      childAspectRatio: Responsive.isTablet(context) ? 0.7 : 0.75,
+      children: filteredProjects.map((project) {
+        // final index = entry.key;
+        // final project = entry.value;
+
+        return ProjectCard(
+          title: project.title,
+          category: project.category,
+          date: project.date,
+          description: project.description,
+          images: project.images,
+          thumbnailUrl: project.thumbnailUrl,
+          projectUrl: project.projectUrl,
+          appStoreUrl: project.appStoreUrl,
+          playStoreUrl: project.playStoreUrl,
+          technologies: project.technologies,
+          isDark: isDark,
+          delay: Responsive.isTablet(context) ? 0.2 : 0.1,
+        );
+      }).toList(),
+    );
   }
 
   // طريقة محسنة لعرض المشاريع على الهاتف المحمول
