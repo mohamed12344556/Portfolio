@@ -38,22 +38,6 @@ class HeroImage extends StatelessWidget {
                   image: DecorationImage(
                     image: const AssetImage('assets/images/profile.jpg'),
                     fit: BoxFit.cover,
-                    onError: (error, stackTrace) {
-                      // Show alert dialog if image fails to load
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('Error'),
-                          content: const Text('Failed to load image.'),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
                   ),
                 ),
               ),
