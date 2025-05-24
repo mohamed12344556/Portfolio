@@ -232,24 +232,33 @@ class HireMeHandler {
             onPressed: () {
               if (formKey.currentState!.validate()) {
                 final whatsappMessage =
-                    '''مرحباً، معك ${nameController.text.trim()}
-                الموضوع: ${serviceController.text.trim()}
-                البريد الإلكتروني: ${emailController.text.trim()}
-                الرسالة:
+                    '''
+                اسمي ${nameController.text.trim()}
+
+                معلومات التواصل:
+                - الاسم: ${nameController.text.trim()}
+                - الايميل: ${emailController.text.trim()}
+                - الموضوع: ${serviceController.text.trim()}
+
+                نص الرسالة:
                 ${messageController.text.trim()}
 
-                يسعدني التواصل معك.''';
+                في انتظار ردكم
+                شكرا لكم ✨
+                ''';
 
                 final emailBody =
-                    '''الاسم: ${nameController.text.trim()}
-                البريد الإلكتروني: ${emailController.text.trim()}
+                    '''
+                الاسم: ${nameController.text.trim()}
+                البريد الالكتروني: ${emailController.text.trim()}
                 الموضوع: ${serviceController.text.trim()}
 
                 الرسالة:
                 ${messageController.text.trim()}
 
                 تحياتي،
-                Mohamed Abd ElQawi''';
+                Mohamed Abd ElQawi
+                ''';
 
                 // عرض خيارات الإرسال
                 showDialog(

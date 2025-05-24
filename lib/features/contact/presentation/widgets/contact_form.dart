@@ -184,27 +184,33 @@ class _ContactFormState extends State<ContactForm> {
               text: _isSubmitting ? 'Sending...' : AppStrings.sendMessage,
               onPressed: () {
                 final whatsappMessage =
-                    '''مرحباً، معك ${_nameController.text.trim()}
+                    '''
+                اسمي ${_nameController.text.trim()}
 
-الاسم: ${_nameController.text.trim()}
-الموضوع: ${_subjectController.text.trim()}
-البريد الإلكتروني: ${_emailController.text.trim()}
+                معلومات التواصل:
+                - الاسم: ${_nameController.text.trim()}
+                - الايميل: ${_emailController.text.trim()}
+                - الموضوع: ${_subjectController.text.trim()}
 
-الرسالة:
-${_messageController.text.trim()}
+                نص الرسالة:
+                ${_messageController.text.trim()}
 
-يسعدني التواصل معك ومناقشة مشروعك.''';
+                في انتظار ردكم
+                شكرا لكم ✨
+                ''';
 
                 final emailBody =
-                    '''الاسم: ${_nameController.text.trim()}
-البريد الإلكتروني: ${_emailController.text.trim()}
-الموضوع: ${_subjectController.text.trim()}
+                    '''
+                الاسم: ${_nameController.text.trim()}
+                البريد الالكتروني: ${_emailController.text.trim()}
+                الموضوع: ${_subjectController.text.trim()}
 
-الرسالة:
-${_messageController.text.trim()}
+                الرسالة:
+                ${_messageController.text.trim()}
 
-تحياتي،
-Mohamed Abd ElQawi''';
+                تحياتي،
+                Mohamed Abd ElQawi
+                ''';
 
                 showDialog(
                   context: context,
