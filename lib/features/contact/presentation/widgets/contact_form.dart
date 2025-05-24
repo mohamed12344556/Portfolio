@@ -18,9 +18,9 @@ class _ContactFormState extends State<ContactForm> {
   final _subjectController = TextEditingController();
   final _messageController = TextEditingController();
 
-  bool _isSubmitting = false;
+  final bool _isSubmitting = false;
   String? _submitMessage;
-  bool _submitSuccess = false;
+  final bool _submitSuccess = false;
 
   @override
   void dispose() {
@@ -31,51 +31,51 @@ class _ContactFormState extends State<ContactForm> {
     super.dispose();
   }
 
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isSubmitting = true;
-        _submitMessage = null;
-      });
+  // void _submitForm() {
+  //   if (_formKey.currentState!.validate()) {
+  //     setState(() {
+  //       _isSubmitting = true;
+  //       _submitMessage = null;
+  //     });
 
-      // بناء الرسالة
-      final message =
-          '''
-              Name: ${_nameController.text}
-              Email: ${_emailController.text}
-              Subject: ${_subjectController.text}
-              Message: ${_messageController.text}
-      ''';
+  //     // بناء الرسالة
+  //     final message =
+  //         '''
+  //             Name: ${_nameController.text}
+  //             Email: ${_emailController.text}
+  //             Subject: ${_subjectController.text}
+  //             Message: ${_messageController.text}
+  //     ''';
 
-      // محاولة إرسال الرسالة عبر الواتساب
-      try {
-        HireMeHandler.sendWhatsAppMessage('+201060796400', message);
-      } catch (e) {
-        print("Error sending WhatsApp: $e");
-      }
+  //     // محاولة إرسال الرسالة عبر الواتساب
+  //     try {
+  //       HireMeHandler.sendWhatsAppMessage('+201060796400', message);
+  //     } catch (e) {
+  //       print("Error sending WhatsApp: $e");
+  //     }
 
-      // محاولة إرسال بريد إلكتروني
-      try {
-        HireMeHandler.sendEmail(
-          'mohamedahbd545@gmail.com',
-          'Contact Form: ${_subjectController.text}',
-          message,
-        );
-      } catch (e) {
-        print("Error sending email: $e");
-      }
+  //     // محاولة إرسال بريد إلكتروني
+  //     try {
+  //       HireMeHandler.sendEmail(
+  //         'mohamedahbd545@gmail.com',
+  //         'Contact Form: ${_subjectController.text}',
+  //         message,
+  //       );
+  //     } catch (e) {
+  //       print("Error sending email: $e");
+  //     }
 
-      // إظهار رسالة نجاح
-      Future.delayed(const Duration(seconds: 1), () {
-        setState(() {
-          _isSubmitting = false;
-          _submitSuccess = true;
-          _submitMessage =
-              'Thank you for your message! I will get back to you soon.';
-        });
-      });
-    }
-  }
+  //     // إظهار رسالة نجاح
+  //     Future.delayed(const Duration(seconds: 1), () {
+  //       setState(() {
+  //         _isSubmitting = false;
+  //         _submitSuccess = true;
+  //         _submitMessage =
+  //             'Thank you for your message! I will get back to you soon.';
+  //       });
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +182,65 @@ class _ContactFormState extends State<ContactForm> {
           Center(
             child: AnimatedButton(
               text: _isSubmitting ? 'Sending...' : AppStrings.sendMessage,
-              onPressed: _isSubmitting ? () {} : _submitForm,
+              onPressed: () {
+                final whatsappMessage =
+                    '''مرحباً، معك ${_nameController.text.trim()}
+
+الاسم: ${_nameController.text.trim()}
+الموضوع: ${_subjectController.text.trim()}
+البريد الإلكتروني: ${_emailController.text.trim()}
+
+الرسالة:
+${_messageController.text.trim()}
+
+يسعدني التواصل معك ومناقشة مشروعك.''';
+
+                final emailBody =
+                    '''الاسم: ${_nameController.text.trim()}
+البريد الإلكتروني: ${_emailController.text.trim()}
+الموضوع: ${_subjectController.text.trim()}
+
+الرسالة:
+${_messageController.text.trim()}
+
+تحياتي،
+Mohamed Abd ElQawi''';
+
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Choose Sending Method'),
+                    content: const Text(
+                      'How would you like to send your message?',
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          HireMeHandler.sendWhatsAppMessage(
+                            '+201060796400',
+                            whatsappMessage,
+                            context: context,
+                          );
+                        },
+                        child: const Text('WhatsApp'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          HireMeHandler.sendEmail(
+                            'mohamedahbd545@gmail.com',
+                            'Contact Form: ${_subjectController.text}',
+                            emailBody,
+                            context: context,
+                          );
+                        },
+                        child: const Text('Email'),
+                      ),
+                    ],
+                  ),
+                );
+              },
               isPrimary: true,
               icon: Icons.send,
               width: 200,

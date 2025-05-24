@@ -231,14 +231,25 @@ class HireMeHandler {
             ),
             onPressed: () {
               if (formKey.currentState!.validate()) {
-                final message =
-                    '''
-Name: ${nameController.text}
-Email: ${emailController.text}
-Phone: ${phoneController.text}
-Service: ${serviceController.text}
-Message: ${messageController.text}
-                ''';
+                final whatsappMessage =
+                    '''مرحباً، معك ${nameController.text.trim()}
+                الموضوع: ${serviceController.text.trim()}
+                البريد الإلكتروني: ${emailController.text.trim()}
+                الرسالة:
+                ${messageController.text.trim()}
+
+                يسعدني التواصل معك.''';
+
+                final emailBody =
+                    '''الاسم: ${nameController.text.trim()}
+                البريد الإلكتروني: ${emailController.text.trim()}
+                الموضوع: ${serviceController.text.trim()}
+
+                الرسالة:
+                ${messageController.text.trim()}
+
+                تحياتي،
+                Mohamed Abd ElQawi''';
 
                 // عرض خيارات الإرسال
                 showDialog(
@@ -252,7 +263,7 @@ Message: ${messageController.text}
                           Navigator.pop(context);
                           sendWhatsAppMessage(
                             '+201060796400',
-                            message,
+                            whatsappMessage,
                             context: context,
                           );
                           Navigator.pop(context);
@@ -271,7 +282,7 @@ Message: ${messageController.text}
                           sendEmail(
                             'mohamedahbd545@gmail.com',
                             'Portfolio Inquiry from ${nameController.text}',
-                            message,
+                            emailBody,
                             context: context,
                           );
                           Navigator.pop(context);
