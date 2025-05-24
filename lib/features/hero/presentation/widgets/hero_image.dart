@@ -28,17 +28,15 @@ class HeroImage extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Expanded(
-              child: Container(
-                width: 380,
-                height: 380,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isDark ? AppColors.darkCard : AppColors.lightCard,
-                  image: DecorationImage(
-                    image: const AssetImage('assets/images/profile.jpg'),
-                    fit: BoxFit.cover,
-                  ),
+            Container(
+              width: 380,
+              height: 380,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: isDark ? AppColors.darkCard : AppColors.lightCard,
+                image: DecorationImage(
+                  image: const AssetImage('assets/images/profile.jpg'),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
