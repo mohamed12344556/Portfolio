@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
-import 'package:personal_portfolio/core/themes/app_strings.dart';
-import 'package:personal_portfolio/core/utils/responsive.dart';
-import 'package:personal_portfolio/features/about/presentation/widgets/about_section.dart';
-import 'package:personal_portfolio/features/contact/presentation/widgets/contact_section.dart';
-import 'package:personal_portfolio/features/contact/presentation/widgets/hire_me_handler.dart';
-import 'package:personal_portfolio/features/education/presentation/widgets/education_section.dart';
-import 'package:personal_portfolio/features/experience/presentation/widgets/experience_section.dart';
-import 'package:personal_portfolio/features/hero/presentation/widgets/hero_section.dart';
-import 'package:personal_portfolio/features/home/presentation/widgets/footer.dart';
-import 'package:personal_portfolio/features/home/presentation/widgets/mobile_drawer.dart';
-import 'package:personal_portfolio/features/home/presentation/widgets/navbar.dart';
-import 'package:personal_portfolio/features/portfolio/presentation/widgets/portfolio_section.dart';
-import 'package:personal_portfolio/features/services/presentation/widgets/services_section.dart';
-import 'package:personal_portfolio/features/skills/presentation/widgets/skills_section.dart';
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/themes/app_strings.dart';
+import '../../../../core/utils/responsive.dart';
+import '../../../about/presentation/widgets/about_section.dart';
+import '../../../contact/presentation/widgets/contact_section.dart';
+import '../../../contact/presentation/widgets/hire_me_handler.dart';
+import '../../../education/presentation/widgets/education_section.dart';
+import '../../../experience/presentation/widgets/experience_section.dart';
+import '../../../hero/presentation/widgets/hero_section.dart';
+import '../widgets/footer.dart';
+import '../widgets/mobile_drawer.dart';
+import '../widgets/navbar.dart';
+import '../../../portfolio/presentation/widgets/portfolio_section.dart';
+import '../../../services/presentation/widgets/services_section.dart';
+import '../../../skills/presentation/widgets/skills_section.dart';
 
 class PortfolioScreen extends StatefulWidget {
   const PortfolioScreen({super.key});

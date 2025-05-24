@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/shared/animations/fade_animation.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
-import 'package:personal_portfolio/core/themes/app_strings.dart';
-import 'package:personal_portfolio/core/utils/responsive.dart';
-import 'package:personal_portfolio/core/widgets/section_title.dart';
-import 'package:personal_portfolio/features/about/presentation/widgets/contact_info.dart';
-import 'package:personal_portfolio/features/contact/presentation/widgets/contact_form.dart';
+import '../../../../core/shared/animations/fade_animation.dart';
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/themes/app_strings.dart';
+import '../../../../core/utils/responsive.dart';
+import '../../../../core/widgets/section_title.dart';
+import '../../../about/presentation/widgets/contact_info.dart';
+import 'contact_form.dart';
 
 class ContactSection extends StatelessWidget {
   const ContactSection({super.key});

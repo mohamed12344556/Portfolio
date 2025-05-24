@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
+import '../../../../core/themes/app_colors.dart';
 
 class SkillCategory extends StatelessWidget {
   final String category;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
-import 'package:personal_portfolio/core/utils/url_launcher.dart';
-import 'package:personal_portfolio/features/portfolio/presentation/widgets/project_gallery.dart';
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/utils/url_launcher.dart';
+import 'project_gallery.dart';
 
 class ProjectCard extends StatefulWidget {
   final String title;

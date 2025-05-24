@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/shared/animations/float_animation.dart';
 
+import '../../../../core/shared/animations/float_animation.dart';
 import '../../../../core/themes/app_colors.dart';
 
 class HeroImage extends StatelessWidget {
@@ -39,27 +39,6 @@ class HeroImage extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              // child: Center(
-              //   child: Image.asset(
-              //     'assets/images/profile.jpg',
-              //     fit: BoxFit.cover,
-              //   ),
-              //   // Column(
-              //   //   mainAxisAlignment: MainAxisAlignment.center,
-              //   //   children: [
-              //   //     Icon(Icons.code, size: 120, color: AppColors.primaryColor),
-              //   //     const SizedBox(height: 20),
-              //   //     Text(
-              //   //       'Flutter Developer',
-              //   //       style: TextStyle(
-              //   //         color: AppColors.primaryColor,
-              //   //         fontSize: 24,
-              //   //         fontWeight: FontWeight.bold,
-              //   //       ),
-              //   //     ),
-              //   //   ],
-              //   // ),
-              // ),
             ),
             // Decorative elements
             Positioned(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/features/hero/presentation/widgets/hero_content.dart';
-import 'package:personal_portfolio/features/hero/presentation/widgets/hero_image.dart';
+import 'hero_content.dart';
+import 'hero_image.dart';
 
 import '../../../../core/utils/responsive.dart';
 

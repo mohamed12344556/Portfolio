@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
-import 'package:personal_portfolio/core/themes/app_strings.dart';
-import 'package:personal_portfolio/features/education/presentation/widgets/certification_viewer.dart';
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/themes/app_strings.dart';
+import '../../../education/presentation/widgets/certification_viewer.dart';
 
 import '../../../../core/shared/animations/fade_animation.dart';
 import '../../../../core/shared/animations/slide_animation.dart';

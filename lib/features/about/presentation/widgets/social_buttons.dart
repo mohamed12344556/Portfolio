@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
-import 'package:personal_portfolio/core/themes/app_strings.dart';
-import 'package:personal_portfolio/core/utils/url_launcher.dart';
-import 'package:personal_portfolio/core/widgets/hover_widget.dart';
+
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/themes/app_strings.dart';
+import '../../../../core/utils/url_launcher.dart';
+import '../../../../core/widgets/hover_widget.dart';
 
 class SocialButtons extends StatelessWidget {
   final double size;

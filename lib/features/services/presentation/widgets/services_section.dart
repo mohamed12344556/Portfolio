@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/shared/data/models/service_model.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
-import 'package:personal_portfolio/core/themes/app_strings.dart';
-import 'package:personal_portfolio/core/utils/responsive.dart';
-import 'package:personal_portfolio/core/widgets/section_title.dart';
-import 'package:personal_portfolio/features/services/presentation/widgets/service_card.dart';
+import '../../../../core/shared/data/models/service_model.dart';
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/themes/app_strings.dart';
+import '../../../../core/utils/responsive.dart';
+import '../../../../core/widgets/section_title.dart';
+import 'service_card.dart';
 
 class ServicesSection extends StatelessWidget {
   const ServicesSection({super.key});

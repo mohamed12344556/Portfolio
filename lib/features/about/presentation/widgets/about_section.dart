@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/shared/animations/fade_animation.dart';
-import 'package:personal_portfolio/core/shared/animations/slide_animation.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
-import 'package:personal_portfolio/core/themes/app_strings.dart';
-import 'package:personal_portfolio/core/utils/responsive.dart';
-import 'package:personal_portfolio/core/widgets/animated_button.dart';
-import 'package:personal_portfolio/core/widgets/gradient_text.dart';
-import 'package:personal_portfolio/core/widgets/section_title.dart';
-import 'package:personal_portfolio/features/education/presentation/widgets/certification_viewer.dart';
+import '../../../../core/shared/animations/fade_animation.dart';
+import '../../../../core/shared/animations/slide_animation.dart';
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/themes/app_strings.dart';
+import '../../../../core/utils/responsive.dart';
+import '../../../../core/widgets/animated_button.dart';
+import '../../../../core/widgets/gradient_text.dart';
+import '../../../../core/widgets/section_title.dart';
+import '../../../education/presentation/widgets/certification_viewer.dart';
 import 'package:personal_portfolio/features/hero/presentation/widgets/stats_counter.dart'
     hide Responsive;
 

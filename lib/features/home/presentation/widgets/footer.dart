@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
-import 'package:personal_portfolio/core/themes/app_strings.dart';
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/themes/app_strings.dart';
+import 'social_media_icons.dart';
 
 import '../../../../core/utils/responsive.dart';
 
@@ -129,71 +130,93 @@ class Footer extends StatelessWidget {
                         );
                       }).toList(),
                     ),
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.code),
-                          onPressed: () {},
-                          color: isDark
-                              ? AppColors.textSecondaryDark
-                              : AppColors.textSecondaryLight,
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.work),
-                          onPressed: () {},
-                          color: isDark
-                              ? AppColors.textSecondaryDark
-                              : AppColors.textSecondaryLight,
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.language),
-                          onPressed: () {},
-                          color: isDark
-                              ? AppColors.textSecondaryDark
-                              : AppColors.textSecondaryLight,
-                        ),
-                      ],
-                    ),
+                    //! Social media icons
+                    SocialMediaIcons(isDark: isDark),
                   ],
                 )
               else
                 Column(
                   children: [
-                    Text(
-                      'MA',
-                      style: TextStyle(
-                        color: AppColors.primaryColor,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Choice'),
+                            content: const Text(
+                              'Do you want to go back to the top of the page or view the image?',
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  onNavItemTap(0);
+                                  // Scroll to the top of the page
+                                  Scrollable.ensureVisible(
+                                    context,
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeInOut,
+                                  );
+                                },
+                                child: const Text(
+                                  'Back to the top of the page',
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  // Show the image in a dialog
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      backgroundColor:
+                                          Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? AppColors.darkCard
+                                          : AppColors.lightCard,
+                                      title: Text(
+                                        '👀❤️‍🩹 قولي رأيك بصراحة ',
+                                        style: TextStyle(
+                                          color: AppColors.primaryColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                          child: const Text('Close'),
+                                        ),
+                                      ],
+                                      content: Image.asset(
+                                        'assets/images/m7m71.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const Text('View the image'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        child: ClipOval(
+                          child: Image.asset(
+                            'assets/images/m7m71.png',
+                            height: 55,
+                            width: 55,
+                            fit: BoxFit.cover,
+                            scale: 1.5,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.code),
-                          onPressed: () {},
-                          color: isDark
-                              ? AppColors.textSecondaryDark
-                              : AppColors.textSecondaryLight,
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.work),
-                          onPressed: () {},
-                          color: isDark
-                              ? AppColors.textSecondaryDark
-                              : AppColors.textSecondaryLight,
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.language),
-                          onPressed: () {},
-                          color: isDark
-                              ? AppColors.textSecondaryDark
-                              : AppColors.textSecondaryLight,
-                        ),
-                      ],
-                    ),
+                    SocialMediaIcons(isDark: isDark),
                   ],
                 ),
               const SizedBox(height: 20),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/shared/animations/fade_animation.dart';
-import 'package:personal_portfolio/core/shared/data/models/experience_model.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
+import '../../../../core/shared/animations/fade_animation.dart';
+import '../../../../core/shared/data/models/experience_model.dart';
+import '../../../../core/themes/app_colors.dart';
 
 class ExperienceTimeline extends StatelessWidget {
   const ExperienceTimeline({super.key});

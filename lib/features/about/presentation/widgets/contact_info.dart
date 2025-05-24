@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/themes/app_strings.dart';
-import 'package:personal_portfolio/core/utils/url_launcher.dart';
-import 'package:personal_portfolio/features/contact/presentation/widgets/contact_card.dart';
+
+import '../../../../core/themes/app_strings.dart';
+import '../../../../core/utils/url_launcher.dart';
+import '../../../contact/presentation/widgets/contact_card.dart';
 
 class ContactInfo extends StatelessWidget {
   const ContactInfo({super.key});

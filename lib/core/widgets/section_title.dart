@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
-import 'package:personal_portfolio/core/widgets/gradient_text.dart';
+import '../themes/app_colors.dart';
+import 'gradient_text.dart';
 
 class SectionTitle extends StatelessWidget {
   final String title;

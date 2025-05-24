@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:personal_portfolio/core/themes/app_theme.dart';
+import 'core/themes/app_theme.dart';
 
 import 'features/home/presentation/screens/portfolio_screen.dart';
 

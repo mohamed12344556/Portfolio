@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
-import 'package:personal_portfolio/core/themes/text_styles.dart';
+import 'app_colors.dart';
+import 'text_styles.dart';
 
 class AppTheme {
   static ThemeData get darkTheme {

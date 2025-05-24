@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/shared/animations/animated_text.dart';
-import 'package:personal_portfolio/core/shared/animations/fade_animation.dart';
-import 'package:personal_portfolio/core/shared/data/models/experience_model.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
-import 'package:personal_portfolio/core/themes/app_strings.dart';
-import 'package:personal_portfolio/core/utils/responsive.dart';
-import 'package:personal_portfolio/core/widgets/section_title.dart';
-import 'package:personal_portfolio/features/experience/presentation/widgets/experience_card.dart';
+import '../../../../core/shared/animations/animated_text.dart';
+import '../../../../core/shared/animations/fade_animation.dart';
+import '../../../../core/shared/data/models/experience_model.dart';
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/themes/app_strings.dart';
+import '../../../../core/utils/responsive.dart';
+import '../../../../core/widgets/section_title.dart';
+import 'experience_card.dart';
 
 class ExperienceSection extends StatefulWidget {
   final ScrollController? scrollController;

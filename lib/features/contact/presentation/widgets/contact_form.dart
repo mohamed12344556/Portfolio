@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/core/themes/app_colors.dart';
-import 'package:personal_portfolio/core/themes/app_strings.dart';
-import 'package:personal_portfolio/core/widgets/animated_button.dart';
-import 'package:personal_portfolio/features/contact/presentation/widgets/hire_me_handler.dart';
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/themes/app_strings.dart';
+import '../../../../core/widgets/animated_button.dart';
+import 'hire_me_handler.dart';
 
 class ContactForm extends StatefulWidget {
   const ContactForm({super.key});
