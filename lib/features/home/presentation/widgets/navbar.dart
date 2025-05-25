@@ -86,7 +86,7 @@ class Navbar extends StatelessWidget {
                             ),
                           ],
                           content: Image.asset(
-                            'assets/images/m7m71.png',
+                            "assets/images/m7m71.png",
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -102,7 +102,8 @@ class Navbar extends StatelessWidget {
             backgroundColor: Colors.transparent,
             child: ClipOval(
               child: Image.asset(
-                'assets/images/m7m71.png',
+                // 'assets/images/m7m71.png',
+                "assets/images/splash.png",
                 height: 55,
                 width: 55,
                 fit: BoxFit.cover,
