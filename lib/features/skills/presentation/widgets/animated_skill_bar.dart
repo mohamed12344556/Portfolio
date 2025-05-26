@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../../core/themes/app_colors.dart';
+import 'package:personal_portfolio/core/themes/app_colors.dart';
 
+import '../../../../core/utils/responsive.dart';
+
+// Enhanced AnimatedSkillBar with fixed width calculation
 class AnimatedSkillBar extends StatefulWidget {
   final String skillName;
   final double percentage;
@@ -9,6 +12,7 @@ class AnimatedSkillBar extends StatefulWidget {
   final bool animateOnScroll;
   final ScrollController? scrollController;
   final double scrollStartOffset;
+  final Color? progressColor;
 
   const AnimatedSkillBar({
     super.key,
@@ -19,6 +23,7 @@ class AnimatedSkillBar extends StatefulWidget {
     this.animateOnScroll = false,
     this.scrollController,
     this.scrollStartOffset = 0.0,
+    this.progressColor,
   });
 
   @override
@@ -47,8 +52,12 @@ class _AnimatedSkillBarState extends State<AnimatedSkillBar>
     if (widget.animateOnScroll && widget.scrollController != null) {
       widget.scrollController!.addListener(_handleScrollListener);
     } else {
-      _controller.forward();
-      _hasAnimated = true;
+      Future.delayed(const Duration(milliseconds: 300), () {
+        if (mounted) {
+          _controller.forward();
+          _hasAnimated = true;
+        }
+      });
     }
   }
 
@@ -66,7 +75,6 @@ class _AnimatedSkillBarState extends State<AnimatedSkillBar>
     if (scrollPercentage >= widget.scrollStartOffset) {
       _controller.forward();
       _hasAnimated = true;
-      // يمكننا إزالة المستمع بمجرد تشغيل الرسوم المتحركة
       widget.scrollController!.removeListener(_handleScrollListener);
     }
   }
@@ -80,74 +88,193 @@ class _AnimatedSkillBarState extends State<AnimatedSkillBar>
     super.dispose();
   }
 
+  double _getBarHeight(BuildContext context) {
+    if (Responsive.isDesktop(context)) {
+      return 12;
+    } else if (Responsive.isTablet(context)) {
+      return 10;
+    } else {
+      return 8;
+    }
+  }
+
+  double _getFontSize(BuildContext context) {
+    if (Responsive.isDesktop(context)) {
+      return 16;
+    } else if (Responsive.isTablet(context)) {
+      return 15;
+    } else {
+      return 14;
+    }
+  }
+
+  double _getPercentageFontSize(BuildContext context) {
+    if (Responsive.isDesktop(context)) {
+      return 13;
+    } else if (Responsive.isTablet(context)) {
+      return 12;
+    } else {
+      return 11;
+    }
+  }
+
+  double _getCardPadding(BuildContext context) {
+    if (Responsive.isDesktop(context)) {
+      return 20;
+    } else if (Responsive.isTablet(context)) {
+      return 16;
+    } else {
+      return 12;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final barHeight = _getBarHeight(context);
+    final fontSize = _getFontSize(context);
+    final percentageFontSize = _getPercentageFontSize(context);
+    final cardPadding = _getCardPadding(context);
+
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.skillName,
-                  style: TextStyle(
-                    color: widget.isDark
-                        ? AppColors.textDark
-                        : AppColors.textLight,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '${(_animation.value * 100).toInt()}%',
-                  style: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+        return Container(
+          padding: EdgeInsets.all(cardPadding),
+          decoration: BoxDecoration(
+            color: widget.isDark
+                ? Colors.grey[850]?.withOpacity(0.5)
+                : Colors.white.withOpacity(0.8),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: widget.isDark
+                  ? Colors.grey[700]?.withOpacity(0.5) ?? Colors.grey
+                  : Colors.grey[300]?.withOpacity(0.5) ?? Colors.grey,
+              width: 1,
             ),
-            const SizedBox(height: 8),
-            Stack(
-              children: [
-                // Background Bar
-                Container(
-                  height: 10,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: widget.isDark
-                        ? AppColors.darkCard
-                        : AppColors.lightCard,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                // Progress Bar
-                Container(
-                  height: 10,
-                  width: MediaQuery.of(context).size.width * _animation.value,
-                  decoration: BoxDecoration(
-                    gradient: AppColors.primaryGradient,
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primaryColor.withOpacity(0.3),
-                        blurRadius: 5,
-                        offset: const Offset(0, 2),
+            boxShadow: [
+              BoxShadow(
+                color: widget.isDark
+                    ? Colors.black.withOpacity(0.1)
+                    : Colors.grey.withOpacity(0.1),
+                blurRadius: 6,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      widget.skillName,
+                      style: TextStyle(
+                        color: widget.isDark ? Colors.white : Colors.black87,
+                        fontWeight: FontWeight.w600,
+                        fontSize: fontSize,
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: cardPadding * 0.4,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      // color: (widget.progressColor ?? AppColors.primaryColor)
+                      //     .withOpacity(0.1),
+                      color: (widget.progressColor ?? AppColors.info)
+                          .withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      '${(_animation.value * 100).toInt()}%',
+                      style: TextStyle(
+                        // color: widget.progressColor ?? AppColors.primaryColor,
+                        color: widget.progressColor ?? AppColors.info,
+                        fontWeight: FontWeight.bold,
+                        fontSize: percentageFontSize,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: cardPadding * 0.6),
+              // Use LayoutBuilder to get the actual container width
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  return Stack(
+                    children: [
+                      // Background Bar
+                      Container(
+                        height: barHeight,
+                        width: constraints.maxWidth,
+                        decoration: BoxDecoration(
+                          color: widget.isDark
+                              ? Colors.grey[700]
+                              : Colors.grey[300],
+                          borderRadius: BorderRadius.circular(barHeight / 2),
+                        ),
+                      ),
+                      // Progress Bar - Fixed width calculation
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        height: barHeight,
+                        width:
+                            constraints.maxWidth *
+                            _animation
+                                .value, // Use container width instead of screen width
+                        decoration: BoxDecoration(
+                          // color: widget.progressColor ?? AppColors.primaryColor,
+                          color: widget.progressColor ?? AppColors.info,
+                          borderRadius: BorderRadius.circular(barHeight / 2),
+                          boxShadow: [
+                            BoxShadow(
+                              // color:
+                              //     (widget.progressColor ??
+                              //             AppColors.primaryColor)
+                              //         .withOpacity(0.3),
+                              color: (widget.progressColor ?? AppColors.info)
+                                  .withOpacity(0.3),
+                              blurRadius: Responsive.isDesktop(context) ? 6 : 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Shine effect for desktop
+                      if (Responsive.isDesktop(context))
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          height: barHeight,
+                          width: constraints.maxWidth * _animation.value,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.white.withOpacity(0.0),
+                                Colors.white.withOpacity(0.3),
+                                Colors.white.withOpacity(0.0),
+                              ],
+                              stops: const [0.0, 0.5, 1.0],
+                            ),
+                            borderRadius: BorderRadius.circular(barHeight / 2),
+                          ),
+                        ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
         );
       },
     );
   }
 }
 
+// Enhanced AnimatedCircularSkill with better responsive design
 class AnimatedCircularSkill extends StatefulWidget {
   final String skillName;
   final double percentage;
@@ -156,7 +283,7 @@ class AnimatedCircularSkill extends StatefulWidget {
   final bool animateOnScroll;
   final ScrollController? scrollController;
   final double scrollStartOffset;
-  final double size;
+  final double? size;
   final Color? progressColor;
 
   const AnimatedCircularSkill({
@@ -168,7 +295,7 @@ class AnimatedCircularSkill extends StatefulWidget {
     this.animateOnScroll = false,
     this.scrollController,
     this.scrollStartOffset = 0.0,
-    this.size = 100.0,
+    this.size,
     this.progressColor,
   });
 
@@ -198,8 +325,12 @@ class _AnimatedCircularSkillState extends State<AnimatedCircularSkill>
     if (widget.animateOnScroll && widget.scrollController != null) {
       widget.scrollController!.addListener(_handleScrollListener);
     } else {
-      _controller.forward();
-      _hasAnimated = true;
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) {
+          _controller.forward();
+          _hasAnimated = true;
+        }
+      });
     }
   }
 
@@ -217,7 +348,6 @@ class _AnimatedCircularSkillState extends State<AnimatedCircularSkill>
     if (scrollPercentage >= widget.scrollStartOffset) {
       _controller.forward();
       _hasAnimated = true;
-      // يمكننا إزالة المستمع بمجرد تشغيل الرسوم المتحركة
       widget.scrollController!.removeListener(_handleScrollListener);
     }
   }
@@ -231,71 +361,204 @@ class _AnimatedCircularSkillState extends State<AnimatedCircularSkill>
     super.dispose();
   }
 
+  // Improved responsive sizing methods
+  double _getSize(BuildContext context) {
+    if (widget.size != null) return widget.size!;
+
+    final width = MediaQuery.of(context).size.width;
+
+    if (width >= 1200) {
+      return 120;
+    } else if (width >= 900) {
+      return 110;
+    } else if (width >= 600) {
+      return 100;
+    } else if (width >= 400) {
+      return 90;
+    } else {
+      return 80;
+    }
+  }
+
+  double _getStrokeWidth(BuildContext context) {
+    final size = _getSize(context);
+    return size * 0.08; // 8% of the circle size
+  }
+
+  double _getPercentageFontSize(BuildContext context) {
+    final size = _getSize(context);
+    return size * 0.18; // 18% of the circle size
+  }
+
+  double _getSkillNameFontSize(BuildContext context) {
+    if (Responsive.isDesktop(context)) {
+      return 16;
+    } else if (Responsive.isTablet(context)) {
+      return 15;
+    } else if (Responsive.isSmallMobile(context)) {
+      return 13;
+    } else {
+      return 14;
+    }
+  }
+
+  double _getCardPadding(BuildContext context) {
+    if (Responsive.isDesktop(context)) {
+      return 20;
+    } else if (Responsive.isTablet(context)) {
+      return 16;
+    } else {
+      return 12;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final size = _getSize(context);
+    final strokeWidth = _getStrokeWidth(context);
+    final percentageFontSize = _getPercentageFontSize(context);
+    final skillNameFontSize = _getSkillNameFontSize(context);
+    final cardPadding = _getCardPadding(context);
+
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {
-        return Column(
-          children: [
-            SizedBox(
-              width: widget.size,
-              height: widget.size,
-              child: Stack(
-                children: [
-                  Center(
-                    child: SizedBox(
-                      width: widget.size,
-                      height: widget.size,
-                      child: CircularProgressIndicator(
-                        value: _animation.value,
-                        strokeWidth: 8,
-                        backgroundColor: widget.isDark
-                            ? AppColors.darkCard
-                            : AppColors.lightCard,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          widget.progressColor ?? AppColors.primaryColor,
+        return Container(
+          padding: EdgeInsets.all(cardPadding),
+          decoration: BoxDecoration(
+            color: widget.isDark
+                ? Colors.grey[850]?.withOpacity(0.5)
+                : Colors.white.withOpacity(0.8),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: widget.isDark
+                  ? Colors.grey[700]?.withOpacity(0.5) ?? Colors.grey
+                  : Colors.grey[300]?.withOpacity(0.5) ?? Colors.grey,
+              width: 1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: widget.isDark
+                    ? Colors.black.withOpacity(0.2)
+                    : Colors.grey.withOpacity(0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: size,
+                height: size,
+                child: Stack(
+                  children: [
+                    Center(
+                      child: SizedBox(
+                        width: size,
+                        height: size,
+                        child: CircularProgressIndicator(
+                          value: _animation.value,
+                          strokeWidth: strokeWidth,
+                          backgroundColor: widget.isDark
+                              ? Colors.grey[700]
+                              : Colors.grey[300],
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            widget.progressColor ?? Colors.blue,
+                          ),
+                          strokeCap: StrokeCap.round,
                         ),
                       ),
                     ),
-                  ),
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${(_animation.value * 100).toInt()}%',
-                          style: TextStyle(
-                            color:
-                                widget.progressColor ?? AppColors.primaryColor,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
+                    Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '${(_animation.value * 100).toInt()}%',
+                            style: TextStyle(
+                              color: widget.progressColor ?? Colors.blue,
+                              fontSize: percentageFontSize,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
+                          if (Responsive.isDesktop(context))
+                            Container(
+                              width: size * 0.25,
+                              height: 2,
+                              margin: const EdgeInsets.only(top: 4),
+                              decoration: BoxDecoration(
+                                color: widget.progressColor ?? Colors.blue,
+                                borderRadius: BorderRadius.circular(1),
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              widget.skillName,
-              style: TextStyle(
-                color: widget.isDark ? AppColors.textDark : AppColors.textLight,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+              SizedBox(height: cardPadding * 0.8),
+              Text(
+                widget.skillName,
+                style: TextStyle(
+                  color: widget.isDark ? Colors.white : Colors.black87,
+                  fontWeight: FontWeight.w600,
+                  fontSize: skillNameFontSize,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
-              textAlign: TextAlign.center,
-            ),
-          ],
+            ],
+          ),
         );
       },
     );
   }
 }
 
+// إضافة مكون لعرض مجموعة من المهارات بتخطيط مرن
+class ResponsiveSkillsGrid extends StatelessWidget {
+  final List<Widget> skills;
+  final bool isCircular;
+
+  const ResponsiveSkillsGrid({
+    super.key,
+    required this.skills,
+    this.isCircular = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (isCircular) {
+      return ResponsiveGridView(
+        childAspectRatio: Responsive.isDesktop(context) ? 0.9 : 1.0,
+        crossAxisSpacing: Responsive.isDesktop(context) ? 24 : 16,
+        mainAxisSpacing: Responsive.isDesktop(context) ? 24 : 16,
+        children: skills,
+      );
+    } else {
+      return Column(
+        children: skills
+            .map(
+              (skill) => Padding(
+                padding: EdgeInsets.only(
+                  bottom: Responsive.isDesktop(context) ? 20 : 16,
+                ),
+                child: skill,
+              ),
+            )
+            .toList(),
+      );
+    }
+  }
+}
+
 // إضافة مجموعة مهارات مع تأثيرات حركية
+// Enhanced AnimatedSkillsGrid with better responsive grid
 class AnimatedSkillsGrid extends StatefulWidget {
   final Map<String, double> skills;
   final bool isDark;
@@ -315,55 +578,137 @@ class AnimatedSkillsGrid extends StatefulWidget {
 }
 
 class _AnimatedSkillsGridState extends State<AnimatedSkillsGrid> {
+  int _getCrossAxisCount(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
+    if (width >= 1400) {
+      return 5;
+    } else if (width >= 1200) {
+      return 4;
+    } else if (width >= 900) {
+      return 3;
+    } else if (width >= 600) {
+      return 2;
+    } else {
+      return 1;
+    }
+  }
+
+  double _getChildAspectRatio(BuildContext context) {
+    if (widget.useCircular) {
+      return Responsive.isMobile(context) ? 0.9 : 1.0;
+    } else {
+      return 3.0; // For skill bars
+    }
+  }
+
+  double _getSpacing(BuildContext context) {
+    if (Responsive.isDesktop(context)) {
+      return 20;
+    } else if (Responsive.isTablet(context)) {
+      return 16;
+    } else {
+      return 12;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<Color> colors = [
-      AppColors.primaryColor,
       Colors.blue,
       Colors.green,
       Colors.orange,
       Colors.purple,
       Colors.teal,
+      Colors.red,
+      Colors.indigo,
+      Colors.pink,
     ];
 
     if (widget.useCircular) {
-      return GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: MediaQuery.of(context).size.width > 768 ? 4 : 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
-        ),
-        itemCount: widget.skills.length,
-        itemBuilder: (context, index) {
-          final skill = widget.skills.entries.elementAt(index);
-          return AnimatedCircularSkill(
-            skillName: skill.key,
-            percentage: skill.value,
-            isDark: widget.isDark,
-            animateOnScroll: true,
-            scrollController: widget.scrollController,
-            scrollStartOffset: 0.5,
-            progressColor: colors[index % colors.length],
+      return LayoutBuilder(
+        builder: (context, constraints) {
+          return GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: _getCrossAxisCount(context),
+              crossAxisSpacing: _getSpacing(context),
+              mainAxisSpacing: _getSpacing(context),
+              childAspectRatio: _getChildAspectRatio(context),
+            ),
+            itemCount: widget.skills.length,
+            itemBuilder: (context, index) {
+              final skill = widget.skills.entries.elementAt(index);
+              return AnimatedCircularSkill(
+                skillName: skill.key,
+                percentage: skill.value,
+                isDark: widget.isDark,
+                animateOnScroll: true,
+                scrollController: widget.scrollController,
+                scrollStartOffset: 0.5,
+                progressColor: colors[index % colors.length],
+              );
+            },
           );
         },
       );
     } else {
+      // For linear skill bars - implement AnimatedSkillBar here
       return ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: widget.skills.length,
-        separatorBuilder: (context, index) => const SizedBox(height: 15),
+        separatorBuilder: (context, index) =>
+            SizedBox(height: _getSpacing(context)),
         itemBuilder: (context, index) {
           final skill = widget.skills.entries.elementAt(index);
-          return AnimatedSkillBar(
-            skillName: skill.key,
-            percentage: skill.value,
-            isDark: widget.isDark,
-            animateOnScroll: true,
-            scrollController: widget.scrollController,
-            scrollStartOffset: 0.5,
+          // You would implement AnimatedSkillBar similar to AnimatedCircularSkill
+          return Container(
+            padding: EdgeInsets.all(_getSpacing(context)),
+            decoration: BoxDecoration(
+              color: widget.isDark
+                  ? Colors.grey[850]?.withOpacity(0.5)
+                  : Colors.white.withOpacity(0.8),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: widget.isDark
+                    ? Colors.grey[700]?.withOpacity(0.5) ?? Colors.grey
+                    : Colors.grey[300]?.withOpacity(0.5) ?? Colors.grey,
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  skill.key,
+                  style: TextStyle(
+                    color: widget.isDark ? Colors.white : Colors.black87,
+                    fontWeight: FontWeight.w600,
+                    fontSize: Responsive.isDesktop(context) ? 16 : 14,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                LinearProgressIndicator(
+                  value: skill.value,
+                  backgroundColor: widget.isDark
+                      ? Colors.grey[700]
+                      : Colors.grey[300],
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    colors[index % colors.length],
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '${(skill.value * 100).toInt()}%',
+                  style: TextStyle(
+                    color: colors[index % colors.length],
+                    fontSize: Responsive.isDesktop(context) ? 14 : 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
           );
         },
       );

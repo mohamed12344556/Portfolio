@@ -1,4 +1,7 @@
 class AppStrings {
+  // App Information
+  static const String appName = 'M7M7 Portfolio';
+  
   // Personal Info
   static const String name = 'Mohamed Abdelqawi';
   static const String title = 'Flutter Developer';

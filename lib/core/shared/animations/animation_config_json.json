@@ -1,0 +1,97 @@
+{
+  "animations": {
+    "fadeIn": {
+      "duration": 800,
+      "curve": "easeOutCubic",
+      "delay": 0
+    },
+    "slideUp": {
+      "duration": 1000,
+      "curve": "easeOutBack",
+      "delay": 200,
+      "offset": {
+        "x": 0,
+        "y": 0.3
+      }
+    },
+    "scale": {
+      "duration": 1200,
+      "curve": "elasticOut",
+      "delay": 400,
+      "from": 0.8,
+      "to": 1.0
+    },
+    "bounce": {
+      "duration": 2000,
+      "curve": "elasticInOut",
+      "delay": 1000,
+      "from": 1.0,
+      "to": 1.02,
+      "repeat": true
+    }
+  },
+  "sections": [
+    {
+      "name": "hero",
+      "index": 0,
+      "animations": ["fadeIn", "slideUp", "scale"],
+      "slideDirection": "bottom",
+      "triggerOffset": 0.2
+    },
+    {
+      "name": "about",
+      "index": 1,
+      "animations": ["fadeIn", "slideUp", "scale", "bounce"],
+      "slideDirection": "left",
+      "triggerOffset": 0.3
+    },
+    {
+      "name": "services",
+      "index": 2,
+      "animations": ["fadeIn", "slideUp", "scale"],
+      "slideDirection": "right",
+      "triggerOffset": 0.25
+    },
+    {
+      "name": "portfolio",
+      "index": 3,
+      "animations": ["fadeIn", "slideUp", "scale", "bounce"],
+      "slideDirection": "bottom",
+      "triggerOffset": 0.3
+    },
+    {
+      "name": "experience",
+      "index": 4,
+      "animations": ["fadeIn", "slideUp", "scale"],
+      "slideDirection": "left",
+      "triggerOffset": 0.25
+    },
+    {
+      "name": "education",
+      "index": 5,
+      "animations": ["fadeIn", "slideUp", "scale"],
+      "slideDirection": "right",
+      "triggerOffset": 0.3
+    },
+    {
+      "name": "skills",
+      "index": 6,
+      "animations": ["fadeIn", "slideUp", "scale", "bounce"],
+      "slideDirection": "bottom",
+      "triggerOffset": 0.25
+    },
+    {
+      "name": "contact",
+      "index": 7,
+      "animations": ["fadeIn", "slideUp", "scale"],
+      "slideDirection": "top",
+      "triggerOffset": 0.3
+    }
+  ],
+  "globalSettings": {
+    "staggerDelay": 100,
+    "visibilityThreshold": 0.2,
+    "enableParallax": true,
+    "enableHover": true
+  }
+}

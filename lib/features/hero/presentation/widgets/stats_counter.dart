@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/themes/app_colors.dart';
 
 class StatsCounter extends StatelessWidget {
@@ -178,6 +179,8 @@ class _AnimatedStatsCounterState extends State<AnimatedStatsCounter>
             scale: _scaleAnimation.value,
             child: Container(
               padding: const EdgeInsets.all(20),
+              width: 200,
+              height: 200,
               decoration: BoxDecoration(
                 color: widget.isDark ? AppColors.darkCard : AppColors.lightCard,
                 borderRadius: BorderRadius.circular(20),
