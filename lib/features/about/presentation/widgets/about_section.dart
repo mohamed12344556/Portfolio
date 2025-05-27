@@ -222,7 +222,7 @@ class AboutSection extends StatelessWidget {
               CertificateViewer.showCertificate(
                 context,
                 "Mohamed Ahemd AbdElqawi Flutter Dev",
-                "assets/pdfs/Mohamed-Ahemd-AbdElqawi-Flutter-Dev.pdf",
+                "assets/pdfs/Mohamed-Ahmed-AbdElqawi-Flutter-Dev.pdf",
               );
             },
             isPrimary: true,
