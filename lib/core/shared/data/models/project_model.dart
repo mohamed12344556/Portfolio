@@ -67,7 +67,7 @@ class ProjectData {
           'Developed a fully featured book store app using Flutter with secure JWT authentication, guest mode, integrated payment system and order tracking.',
       appStoreUrl:
           'https://apps.apple.com/ph/app/tkween-%D8%AA%D9%83%D9%88%D9%8A%D9%86/id6743707369',
-      thumbnailUrl: "assets/images/test.jpg",
+      thumbnailUrl: "assets/images/projects/tkween_thumbnail.png",
       playStoreUrl:
           'https://play.google.com/store/apps/details?id=com.tkweenstore.tkween_app',
       images: [
