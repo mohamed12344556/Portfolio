@@ -158,6 +158,7 @@ class _PortfolioSectionState extends State<PortfolioSection> {
           playStoreUrl: project.playStoreUrl,
           technologies: project.technologies,
           isDark: isDark,
+          isPrivate: project.isPrivate,
           delay: Responsive.isTablet(context) ? 0.2 : 0.1,
         );
       }).toList(),
@@ -206,6 +207,7 @@ class _PortfolioSectionState extends State<PortfolioSection> {
                   appStoreUrl: project.appStoreUrl,
                   playStoreUrl: project.playStoreUrl,
                   technologies: project.technologies,
+                  isPrivate: project.isPrivate,
                   isDark: isDark,
                   delay: 0.1, // تأخير ثابت لتجنب التأخير التراكمي
                 ),

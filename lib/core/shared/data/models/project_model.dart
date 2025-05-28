@@ -9,6 +9,7 @@ class ProjectModel {
   final String? appStoreUrl; // رابط App Store
   final String? playStoreUrl; // رابط Play Store
   final List<String> technologies; // التقنيات المستخدمة في المشروع
+  final bool isPrivate; // لتحديد ما إذا كان المشروع خاصًا أم لا
 
   const ProjectModel({
     required this.title,
@@ -21,6 +22,7 @@ class ProjectModel {
     this.appStoreUrl,
     this.playStoreUrl,
     this.technologies = const [],
+    this.isPrivate = false, // القيمة الافتراضية للمشاريع العامة
   });
 }
 
@@ -29,13 +31,33 @@ class ProjectData {
     ProjectModel(
       title: 'Sherkety App',
       category: 'Mobile App',
-      date: 'Nov 2024 - present',
+      date: 'Nov 2024 – present',
       description:
           'Developed a comprehensive company formation app with detailed guides on business types and registration processes. Integrated AI-powered chatbot for real-time assistance, alongside a business card system with scanning/sharing capabilities.',
       projectUrl: 'https://github.com/mohamed12344556/sherkety',
-      thumbnailUrl: "assets/images/test.jpg",
-      images: ["assets/images/test.jpg"],
-      technologies: ['Flutter', 'Firebase', 'Bloc', 'AI Integration'],
+      thumbnailUrl: "assets/images/projects/sherkety_thumbnail.png",
+      images: [
+        "assets/images/projects/sherkety1.png",
+        "assets/images/projects/sherkety2.png",
+        "assets/images/projects/sherkety3.png",
+        "assets/images/projects/sherkety4.png",
+        "assets/images/projects/sherkety5.png",
+        "assets/images/projects/sherkety6.png",
+        "assets/images/projects/sherkety7.png",
+        "assets/images/projects/sherkety8.png",
+      ],
+      technologies: [
+        'Flutter',
+        'Bloc',
+        'Firebase',
+        'AI Chatbot',
+        'Business Card System',
+        'Scanning',
+        'Sharing',
+        'payments',
+        'Responsive Design',
+      ],
+      isPrivate: true, // تحديد المشروع كخاص
     ),
     ProjectModel(
       title: 'Tkween',
@@ -48,12 +70,35 @@ class ProjectData {
       thumbnailUrl: "assets/images/test.jpg",
       playStoreUrl:
           'https://play.google.com/store/apps/details?id=com.tkweenstore.tkween_app',
-      images: ["assets/images/test.jpg", "assets/images/test.jpg"],
+      images: [
+        "assets/images/projects/tkween1.png",
+        "assets/images/projects/tkween2.png",
+        "assets/images/projects/tkween3.png",
+        "assets/images/projects/tkween4.png",
+        "assets/images/projects/tkween5.png",
+        "assets/images/projects/tkween6.png",
+        "assets/images/projects/tkween7.png",
+        "assets/images/projects/tkween8.png",
+        "assets/images/projects/tkween9.png",
+        "assets/images/projects/tkween10.png",
+        "assets/images/projects/tkween11.png",
+        "assets/images/projects/tkween12.png",
+        "assets/images/projects/tkween13.png",
+        "assets/images/projects/tkween14.png",
+        "assets/images/projects/tkween15.png",
+        "assets/images/projects/tkween16.png",
+        "assets/images/projects/tkween17.png",
+        "assets/images/projects/tkween18.png",
+      ],
       technologies: [
         'Flutter',
+        'cubit',
         'RESTful API',
         'Payment Integration',
-        'Firebase',
+        'JWT Authentication',
+        'Responsive Design',
+        'Order Tracking',
+        'Guest Mode',
       ],
     ),
     ProjectModel(

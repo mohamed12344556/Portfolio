@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/themes/app_colors.dart';
 import '../../../../core/utils/url_launcher.dart';
 import 'project_gallery.dart';
@@ -16,6 +17,7 @@ class ProjectCard extends StatefulWidget {
   final List<String> technologies;
   final bool isDark;
   final double delay;
+  final bool isPrivate;
 
   const ProjectCard({
     super.key,
@@ -31,6 +33,7 @@ class ProjectCard extends StatefulWidget {
     this.technologies = const [],
     required this.isDark,
     required this.delay,
+    this.isPrivate = false, // القيمة الافتراضية للمشاريع العامة
   });
 
   @override
@@ -168,14 +171,15 @@ class _ProjectCardState extends State<ProjectCard>
                 end: Alignment.bottomRight,
               ),
             ),
-            child: widget.thumbnailUrl != null && widget.thumbnailUrl!.isNotEmpty
-              ? Image.asset(
-                widget.thumbnailUrl!,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                  _buildDefaultProjectImage(),
-                )
-              : _buildDefaultProjectImage(),
+            child:
+                widget.thumbnailUrl != null && widget.thumbnailUrl!.isNotEmpty
+                ? Image.asset(
+                    widget.thumbnailUrl!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        _buildDefaultProjectImage(),
+                  )
+                : _buildDefaultProjectImage(),
           ),
 
           // تأثير الهوفر
@@ -199,10 +203,11 @@ class _ProjectCardState extends State<ProjectCard>
                             widget.appStoreUrl != null ||
                             widget.playStoreUrl != null))
                       const SizedBox(width: 15),
-                    if (widget.projectUrl != null)
+                    if (widget.projectUrl != null && !widget.isPrivate)
                       _buildActionButton(
                         icon: Icons.link,
                         label: 'View Project',
+                        
                         onTap: () => UrlLauncher.launchURL(
                           widget.projectUrl!,
                           context: context,
@@ -461,9 +466,10 @@ class _ProjectCardState extends State<ProjectCard>
 
   Widget _buildTechnologies() {
     // حد عدد التقنيات المعروضة لتجنب تجاوز المحتوى
-    final displayedTechnologies = widget.technologies.length > 3
-        ? widget.technologies.sublist(0, 3)
-        : widget.technologies;
+    final displayedTechnologies = widget.technologies;
+    // widget.technologies.length > 3
+    //     ? widget.technologies.sublist(0, 3)
+    //     : widget.technologies;
 
     return Wrap(
       spacing: 8,
@@ -495,20 +501,50 @@ class _ProjectCardState extends State<ProjectCard>
   Widget _buildButtons() {
     // استخدام زر واحد فقط لتجنب تجاوز المحتوى
     if (widget.projectUrl != null) {
-      return TextButton.icon(
-        onPressed: () =>
-            UrlLauncher.launchURL(widget.projectUrl!, context: context),
-        icon: const Icon(Icons.link, size: 18),
-        label: const Text('View Project'),
-        style: TextButton.styleFrom(
-          foregroundColor: AppColors.primaryColor,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+      if (widget.isPrivate) {
+        return TextButton.icon(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Private Project'),
+                content: const Text('Sorry, this project is private 🫠💔'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+            );
+          },
+          icon: const Icon(Icons.lock, size: 18),
+          label: const Text('Private Project'),
+          style: TextButton.styleFrom(
+            foregroundColor: AppColors.primaryColor,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            visualDensity: VisualDensity.compact,
           ),
-          visualDensity: VisualDensity.compact,
-        ),
-      );
+        );
+      } else {
+        return TextButton.icon(
+          onPressed: () =>
+              UrlLauncher.launchURL(widget.projectUrl!, context: context),
+          icon: const Icon(Icons.link, size: 18),
+          label: const Text('View Project'),
+          style: TextButton.styleFrom(
+            foregroundColor: AppColors.primaryColor,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            visualDensity: VisualDensity.compact,
+          ),
+        );
+      }
     }
     if (widget.images.isNotEmpty) {
       return TextButton.icon(
