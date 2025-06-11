@@ -29,6 +29,16 @@ class ProjectModel {
 class ProjectData {
   static const List<ProjectModel> projects = [
     ProjectModel(
+      title: 'Yalla Rehla',
+      category: 'Mobile App',
+      date: 'June 2025',
+      description:
+          'a travel booking app with dark/light mode support and localization. Integrated AI-powered search (including image-based search) and an AI chatbot for product recommendations. Implemented a complete booking system with online payments using Paymob.',
+      projectUrl: 'https://github.com/mohamed12344556/yalla_r7la2.git',
+      images: [],
+      technologies: ['Flutter', 'Animations', 'Responsive Design', 'AI Chatbot', 'AI Search', 'Paymob'],
+    ),
+    ProjectModel(
       title: 'Sherkety App',
       category: 'Mobile App',
       date: 'Nov 2024 – present',
@@ -48,7 +58,7 @@ class ProjectData {
       ],
       technologies: [
         'Flutter',
-        'Bloc',
+        'Bloc/Cubit',
         'Firebase',
         'AI Chatbot',
         'Business Card System',
@@ -129,16 +139,6 @@ class ProjectData {
       projectUrl: 'https://github.com/mohamed12344556/portfolio',
       images: [],
       technologies: ['Flutter Web', 'Animations', 'Responsive Design'],
-    ),
-    ProjectModel(
-      title: 'Task Manager',
-      category: 'Productivity',
-      date: 'Jan 2025',
-      description:
-          'A task management application with Firebase integration for data synchronization.',
-      projectUrl: 'https://github.com/mohamed12344556/task-manager',
-      images: [],
-      technologies: ['Flutter', 'Firebase', 'State Management'],
     ),
   ];
 
