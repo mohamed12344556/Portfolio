@@ -88,27 +88,6 @@ class HeroContent extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 60),
-        // FadeAnimation(
-        //   delay: 1.2,
-        //   child: Row(
-        //     children: [
-        //       StatsCounter(
-        //         value: AppStrings.experienceYears,
-        //         label: 'Experience',
-        //       ),
-        //       const SizedBox(width: 40),
-        //       StatsCounter(
-        //         value: AppStrings.projectsCompleted,
-        //         label: 'Projects',
-        //       ),
-        //       const SizedBox(width: 40),
-        //       StatsCounter(
-        //         value: AppStrings.happyClients,
-        //         label: 'Happy Clients',
-        //       ),
-        //     ],
-        //   ),
-        // ),
       ],
     );
   }
