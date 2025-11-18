@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../core/themes/app_colors.dart';
 import '../../../../core/themes/app_strings.dart';
+import '../../../../core/shared/providers/portfolio_provider.dart';
 import '../../../education/presentation/widgets/certification_viewer.dart';
 
 import '../../../../core/shared/animations/fade_animation.dart';
@@ -15,6 +17,7 @@ class HeroContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final personalInfo = context.watch<PortfolioProvider>().personalInfo;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +38,7 @@ class HeroContent extends StatelessWidget {
         SlideAnimation(
           delay: 0.4,
           child: Text(
-            AppStrings.name,
+            personalInfo.name,
             style: Theme.of(context).textTheme.displayLarge,
           ),
         ),
@@ -43,7 +46,7 @@ class HeroContent extends StatelessWidget {
         SlideAnimation(
           delay: 0.6,
           child: GradientText(
-            text: AppStrings.title,
+            text: personalInfo.title,
             style: Theme.of(context).textTheme.displaySmall,
           ),
         ),

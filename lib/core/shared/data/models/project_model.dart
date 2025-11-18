@@ -1,17 +1,19 @@
 class ProjectModel {
+  final String id;
   final String title;
   final String category;
   final String date;
   final String description;
-  final List<String> images; // تعديل لدعم عدة صور
-  final String? thumbnailUrl; // صورة مصغرة للعرض الرئيسي
-  final String? projectUrl; // رابط المشروع
-  final String? appStoreUrl; // رابط App Store
-  final String? playStoreUrl; // رابط Play Store
-  final List<String> technologies; // التقنيات المستخدمة في المشروع
-  final bool isPrivate; // لتحديد ما إذا كان المشروع خاصًا أم لا
+  final List<String> images;
+  final String? thumbnailUrl;
+  final String? projectUrl;
+  final String? appStoreUrl;
+  final String? playStoreUrl;
+  final List<String> technologies;
+  final bool isPrivate;
 
   const ProjectModel({
+    required this.id,
     required this.title,
     required this.category,
     required this.date,
@@ -22,13 +24,81 @@ class ProjectModel {
     this.appStoreUrl,
     this.playStoreUrl,
     this.technologies = const [],
-    this.isPrivate = false, // القيمة الافتراضية للمشاريع العامة
+    this.isPrivate = false,
   });
+
+  // Convert ProjectModel to JSON for Firebase
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'category': category,
+      'date': date,
+      'description': description,
+      'images': images,
+      'thumbnailUrl': thumbnailUrl,
+      'projectUrl': projectUrl,
+      'appStoreUrl': appStoreUrl,
+      'playStoreUrl': playStoreUrl,
+      'technologies': technologies,
+      'isPrivate': isPrivate,
+    };
+  }
+
+  // Create ProjectModel from Firebase JSON
+  factory ProjectModel.fromJson(Map<String, dynamic> json) {
+    return ProjectModel(
+      id: json['id'] ?? '',
+      title: json['title'] ?? '',
+      category: json['category'] ?? '',
+      date: json['date'] ?? '',
+      description: json['description'] ?? '',
+      images: List<String>.from(json['images'] ?? []),
+      thumbnailUrl: json['thumbnailUrl'],
+      projectUrl: json['projectUrl'],
+      appStoreUrl: json['appStoreUrl'],
+      playStoreUrl: json['playStoreUrl'],
+      technologies: List<String>.from(json['technologies'] ?? []),
+      isPrivate: json['isPrivate'] ?? false,
+    );
+  }
+
+  // Create a copy with updated fields
+  ProjectModel copyWith({
+    String? id,
+    String? title,
+    String? category,
+    String? date,
+    String? description,
+    List<String>? images,
+    String? thumbnailUrl,
+    String? projectUrl,
+    String? appStoreUrl,
+    String? playStoreUrl,
+    List<String>? technologies,
+    bool? isPrivate,
+  }) {
+    return ProjectModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      category: category ?? this.category,
+      date: date ?? this.date,
+      description: description ?? this.description,
+      images: images ?? this.images,
+      thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
+      projectUrl: projectUrl ?? this.projectUrl,
+      appStoreUrl: appStoreUrl ?? this.appStoreUrl,
+      playStoreUrl: playStoreUrl ?? this.playStoreUrl,
+      technologies: technologies ?? this.technologies,
+      isPrivate: isPrivate ?? this.isPrivate,
+    );
+  }
 }
 
 class ProjectData {
   static const List<ProjectModel> projects = [
     ProjectModel(
+      id: 'yalla_rehla',
       title: 'Yalla Rehla',
       category: 'Mobile App',
       date: 'June 2025',
@@ -80,6 +150,7 @@ class ProjectData {
       ],
     ),
     ProjectModel(
+      id: 'sherkety_app',
       title: 'Sherkety App',
       category: 'Mobile App',
       date: 'Nov 2024 – present',
@@ -111,6 +182,7 @@ class ProjectData {
       isPrivate: true, // تحديد المشروع كخاص
     ),
     ProjectModel(
+      id: 'tkween',
       title: 'Tkween',
       category: 'E-commerce',
       date: 'Mar 2025',
@@ -153,6 +225,7 @@ class ProjectData {
       ],
     ),
     ProjectModel(
+      id: 'ease_of_learn',
       title: 'Ease Of Learn (EOL)',
       category: 'Education',
       date: 'Jun 2023 - Jul 2024',
@@ -163,6 +236,7 @@ class ProjectData {
       technologies: ['Flutter', 'Firebase', 'ML', 'Chatbot'],
     ),
     ProjectModel(
+      id: 'chat_app',
       title: 'Chat App',
       category: 'Communication',
       date: 'Sep 2024',
@@ -172,6 +246,7 @@ class ProjectData {
       technologies: ['Flutter', 'Firebase', 'Cloud Functions', 'AI Model'],
     ),
     ProjectModel(
+      id: 'portfolio_website',
       title: 'Portfolio Website',
       category: 'Web',
       date: 'May 2025',

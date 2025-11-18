@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/shared/animations/animated_text.dart';
 import '../../../../core/shared/animations/fade_animation.dart';
 import '../../../../core/shared/data/models/project_model.dart';
+import '../../../../core/shared/data/repositories/firebase_repository.dart';
 import '../../../../core/themes/app_colors.dart';
 import '../../../../core/themes/app_strings.dart';
 import '../../../../core/utils/responsive.dart';
@@ -25,6 +26,7 @@ class _PortfolioSectionState extends State<PortfolioSection> {
   final _scrollController = ScrollController();
   int _currentMobileIndex = 0;
   final PageController _mobilePageController = PageController();
+  final FirebaseRepository _repository = FirebaseRepository();
 
   @override
   void initState() {
@@ -73,58 +75,78 @@ class _PortfolioSectionState extends State<PortfolioSection> {
         color: isDark ? AppColors.darkBackground : AppColors.lightBackground,
       ),
       child: Center(
-        child: Column(
-          children: [
-            const SectionTitle(
-              title: AppStrings.portfolioTitle,
-              subtitle: AppStrings.portfolioSubtitle,
-            ),
-            const SizedBox(height: 20),
-            FadeAnimation(
-              delay: 0.2,
-              child: AnimatedText(
-                text: "Check out some of my recent work and personal projects",
-                style: TextStyle(
-                  color: isDark
-                      ? AppColors.textSecondaryDark
-                      : AppColors.textSecondaryLight,
-                  fontSize: 18,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: 40),
-            FadeAnimation(
-              delay: 0.3,
-              child: FilterChips(
-                categories: ProjectData.getCategories(),
-                selectedCategory: _selectedCategory,
-                onCategorySelected: (category) {
-                  setState(() {
-                    _selectedCategory = category;
-                    _currentMobileIndex = 0;
-                  });
-                  if (Responsive.isMobile(context) &&
-                      _mobilePageController.hasClients) {
-                    _mobilePageController.jumpToPage(0);
-                  }
-                },
-              ),
-            ),
-            const SizedBox(height: 40),
-            _selectedProject == null
-                ? _buildProjectGrid(context, isDark)
-                : _buildProjectDetail(context, isDark),
-          ],
+        child: StreamBuilder<List<ProjectModel>>(
+          stream: _repository.getProjects(),
+          initialData: ProjectData.projects, // Fallback to local data
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              debugPrint('Error loading projects: ${snapshot.error}');
+              // Fallback to local data on error
+              return _buildContent(context, isDark, ProjectData.projects);
+            }
+
+            final projects = snapshot.data ?? ProjectData.projects;
+            return _buildContent(context, isDark, projects);
+          },
         ),
       ),
     );
   }
 
-  Widget _buildProjectGrid(BuildContext context, bool isDark) {
+  Widget _buildContent(BuildContext context, bool isDark, List<ProjectModel> allProjects) {
+    // Extract categories from projects
+    final categories = ['All', ...allProjects.map((p) => p.category).toSet()];
+
+    return Column(
+      children: [
+        const SectionTitle(
+          title: AppStrings.portfolioTitle,
+          subtitle: AppStrings.portfolioSubtitle,
+        ),
+        const SizedBox(height: 20),
+        FadeAnimation(
+          delay: 0.2,
+          child: AnimatedText(
+            text: "Check out some of my recent work and personal projects",
+            style: TextStyle(
+              color: isDark
+                  ? AppColors.textSecondaryDark
+                  : AppColors.textSecondaryLight,
+              fontSize: 18,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        const SizedBox(height: 40),
+        FadeAnimation(
+          delay: 0.3,
+          child: FilterChips(
+            categories: categories,
+            selectedCategory: _selectedCategory,
+            onCategorySelected: (category) {
+              setState(() {
+                _selectedCategory = category;
+                _currentMobileIndex = 0;
+              });
+              if (Responsive.isMobile(context) &&
+                  _mobilePageController.hasClients) {
+                _mobilePageController.jumpToPage(0);
+              }
+            },
+          ),
+        ),
+        const SizedBox(height: 40),
+        _selectedProject == null
+            ? _buildProjectGrid(context, isDark, allProjects)
+            : _buildProjectDetail(context, isDark),
+      ],
+    );
+  }
+
+  Widget _buildProjectGrid(BuildContext context, bool isDark, List<ProjectModel> allProjects) {
     final filteredProjects = _selectedCategory == 'All'
-        ? ProjectData.projects
-        : ProjectData.projects
+        ? allProjects
+        : allProjects
               .where((p) => p.category == _selectedCategory)
               .toList();
 

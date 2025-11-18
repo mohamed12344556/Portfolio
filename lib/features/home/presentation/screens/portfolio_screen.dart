@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/themes/app_colors.dart';
 import '../../../../core/themes/app_strings.dart';
 import '../../../../core/utils/responsive.dart';
+import '../../../../core/shared/data/helpers/firebase_data_initializer.dart';
 import '../../../about/presentation/widgets/about_section.dart';
 import '../../../contact/presentation/widgets/contact_section.dart';
 import '../../../contact/presentation/widgets/hire_me_handler.dart';
@@ -371,23 +372,44 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                 isDarkMode: _isDarkMode,
               )
             : null,
-        floatingActionButton: FadeTransition(
-          opacity: _fadeAnimation,
-          child: ScaleTransition(
-            scale: Tween<double>(begin: 0.8, end: 1.0).animate(
-              CurvedAnimation(
-                parent: _fadeController,
-                curve: Curves.elasticOut,
+        floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            // 🔥 TEMPORARY: Firebase Initialization Button - Remove after first use!
+            FadeTransition(
+              opacity: _fadeAnimation,
+              child: FloatingActionButton.extended(
+                heroTag: 'firebase_init',
+                onPressed: () => FirebaseDataInitializer.showInitializationDialog(context),
+                backgroundColor: Colors.orange,
+                tooltip: 'Initialize Firebase Data (Use Once)',
+                elevation: 8,
+                icon: const Icon(Icons.cloud_upload, color: Colors.white),
+                label: const Text('Init Firebase', style: TextStyle(color: Colors.white)),
               ),
             ),
-            child: FloatingActionButton(
-              onPressed: () => HireMeHandler.showHireMeDialog(context),
-              backgroundColor: AppColors.primaryColor,
-              tooltip: 'Hire Me',
-              elevation: 8,
-              child: const Icon(Icons.work_outline, color: Colors.white),
+            const SizedBox(height: 16),
+            // Original Hire Me button
+            FadeTransition(
+              opacity: _fadeAnimation,
+              child: ScaleTransition(
+                scale: Tween<double>(begin: 0.8, end: 1.0).animate(
+                  CurvedAnimation(
+                    parent: _fadeController,
+                    curve: Curves.elasticOut,
+                  ),
+                ),
+                child: FloatingActionButton(
+                  heroTag: 'hire_me',
+                  onPressed: () => HireMeHandler.showHireMeDialog(context),
+                  backgroundColor: AppColors.primaryColor,
+                  tooltip: 'Hire Me',
+                  elevation: 8,
+                  child: const Icon(Icons.work_outline, color: Colors.white),
+                ),
+              ),
             ),
-          ),
+          ],
         ),
         body: FadeTransition(
           opacity: _fadeAnimation,

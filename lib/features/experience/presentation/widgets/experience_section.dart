@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/shared/animations/animated_text.dart';
 import '../../../../core/shared/animations/fade_animation.dart';
 import '../../../../core/shared/data/models/experience_model.dart';
+import '../../../../core/shared/data/repositories/firebase_repository.dart';
 import '../../../../core/themes/app_colors.dart';
 import '../../../../core/themes/app_strings.dart';
 import '../../../../core/utils/responsive.dart';
@@ -19,6 +20,7 @@ class ExperienceSection extends StatefulWidget {
 
 class _ExperienceSectionState extends State<ExperienceSection> {
   final _localScrollController = ScrollController();
+  final FirebaseRepository _repository = FirebaseRepository();
 
   ScrollController get _effectiveScrollController =>
       widget.scrollController ?? _localScrollController;
@@ -78,7 +80,19 @@ class _ExperienceSectionState extends State<ExperienceSection> {
                 ),
               ),
               const SizedBox(height: 60),
-              _buildExperienceContent(context, isDark),
+              StreamBuilder<List<ExperienceModel>>(
+                stream: _repository.getExperiences(),
+                initialData: ExperienceData.experiences,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    debugPrint('Error loading experiences: ${snapshot.error}');
+                    return _buildExperienceContent(context, isDark, ExperienceData.experiences);
+                  }
+
+                  final experiences = snapshot.data ?? ExperienceData.experiences;
+                  return _buildExperienceContent(context, isDark, experiences);
+                },
+              ),
             ],
           ),
         ),
@@ -86,13 +100,13 @@ class _ExperienceSectionState extends State<ExperienceSection> {
     );
   }
 
-  Widget _buildExperienceContent(BuildContext context, bool isDark) {
+  Widget _buildExperienceContent(BuildContext context, bool isDark, List<ExperienceModel> experiences) {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: ExperienceData.experiences.length,
+      itemCount: experiences.length,
       itemBuilder: (context, index) {
-        final experience = ExperienceData.experiences[index];
+        final experience = experiences[index];
         return Padding(
           padding: const EdgeInsets.only(bottom: 30),
           child: ExperienceCard(

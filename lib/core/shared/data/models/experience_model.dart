@@ -1,4 +1,5 @@
 class ExperienceModel {
+  final String id;
   final String company;
   final String role;
   final String duration;
@@ -6,17 +7,59 @@ class ExperienceModel {
   final List<String> description;
 
   const ExperienceModel({
+    required this.id,
     required this.company,
     required this.role,
     required this.duration,
     required this.location,
     required this.description,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'company': company,
+      'role': role,
+      'duration': duration,
+      'location': location,
+      'description': description,
+    };
+  }
+
+  factory ExperienceModel.fromJson(Map<String, dynamic> json) {
+    return ExperienceModel(
+      id: json['id'] ?? '',
+      company: json['company'] ?? '',
+      role: json['role'] ?? '',
+      duration: json['duration'] ?? '',
+      location: json['location'] ?? '',
+      description: List<String>.from(json['description'] ?? []),
+    );
+  }
+
+  ExperienceModel copyWith({
+    String? id,
+    String? company,
+    String? role,
+    String? duration,
+    String? location,
+    List<String>? description,
+  }) {
+    return ExperienceModel(
+      id: id ?? this.id,
+      company: company ?? this.company,
+      role: role ?? this.role,
+      duration: duration ?? this.duration,
+      location: location ?? this.location,
+      description: description ?? this.description,
+    );
+  }
 }
 
 class ExperienceData {
   static const List<ExperienceModel> experiences = [
     ExperienceModel(
+      id: 'cellula_technologies',
       company: 'Cellula Technologies',
       role: 'Flutter Developer',
       duration: 'Feb 2025 – Apr 2025',
@@ -28,6 +71,7 @@ class ExperienceData {
       ],
     ),
     ExperienceModel(
+      id: 'sherkety',
       company: 'Sherkety',
       role: 'Mobile Application Developer',
       duration: 'Oct 2024 – May 2025',
@@ -39,6 +83,7 @@ class ExperienceData {
       ],
     ),
     ExperienceModel(
+      id: 'career180',
       company: 'Career180 (LearnIT Academy)',
       role: 'Flutter Developer Intern',
       duration: 'Sep 2024 – Nov 2024',
@@ -50,6 +95,7 @@ class ExperienceData {
       ],
     ),
     ExperienceModel(
+      id: 'internship_pakistan',
       company: 'Internship Pakistan',
       role: 'Flutter Developer',
       duration: 'Sep 2024 – Nov 2024',
@@ -60,6 +106,7 @@ class ExperienceData {
       ],
     ),
     ExperienceModel(
+      id: 'codealpha',
       company: 'CodeAlpha Internship',
       role: 'App Development Intern',
       duration: 'Sep 2024 – Nov 2024',
@@ -70,6 +117,7 @@ class ExperienceData {
       ],
     ),
     ExperienceModel(
+      id: 'iti',
       company: 'ITI',
       role: 'Mobile Development using Flutter',
       duration: 'Sep 2022 – Dec 2022',
